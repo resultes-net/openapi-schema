@@ -43,54 +43,15 @@
                 }
             }
         },
-        "/profiles/": {
+        "/user": {
             "post": {
-                "summary": "Create File",
-                "operationId": "create_file_profiles__post",
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Body_create_file_profiles__post"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "title": "Response Create File Profiles  Post"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/ttes/params": {
-            "post": {
-                "summary": "Post Params",
-                "operationId": "post_params_ttes_params_post",
+                "summary": "Create User",
+                "operationId": "create_user_user_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/TtesParameters"
+                                "$ref": "#/components/schemas/UserCreate"
                             }
                         }
                     },
@@ -102,8 +63,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "title": "Response Post Params Ttes Params Post"
+                                    "$ref": "#/components/schemas/UserRead"
                                 }
                             }
                         }
@@ -168,20 +128,6 @@
     },
     "components": {
         "schemas": {
-            "Body_create_file_profiles__post": {
-                "properties": {
-                    "file": {
-                        "type": "string",
-                        "format": "binary",
-                        "title": "File"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "file"
-                ],
-                "title": "Body_create_file_profiles__post"
-            },
             "Body_create_token_token_post": {
                 "properties": {
                     "grant_type": {
@@ -597,6 +543,35 @@
                 ],
                 "title": "TtesStorage"
             },
+            "UserCreate": {
+                "properties": {
+                    "user_name": {
+                        "type": "string",
+                        "title": "User Name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    },
+                    "full_name": {
+                        "type": "string",
+                        "title": "Full Name"
+                    },
+                    "plain_password": {
+                        "type": "string",
+                        "title": "Plain Password"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "user_name",
+                    "email",
+                    "full_name",
+                    "plain_password"
+                ],
+                "title": "UserCreate"
+            },
             "UserProvidedProfile": {
                 "properties": {
                     "profile_type": {
@@ -619,6 +594,47 @@
                     "data"
                 ],
                 "title": "UserProvidedProfile"
+            },
+            "UserRead": {
+                "properties": {
+                    "user_name": {
+                        "type": "string",
+                        "title": "User Name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "title": "Email"
+                    },
+                    "full_name": {
+                        "type": "string",
+                        "title": "Full Name"
+                    },
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 16
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id"
+                    },
+                    "disabled": {
+                        "type": "boolean",
+                        "title": "Disabled"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "user_name",
+                    "email",
+                    "full_name",
+                    "disabled"
+                ],
+                "title": "UserRead"
             },
             "ValidationError": {
                 "properties": {
