@@ -81,10 +81,10 @@
                 }
             }
         },
-        "/models/new/ttes": {
+        "/simulations": {
             "post": {
-                "summary": "Create And Run New Ttes Simulation",
-                "operationId": "create_and_run_new_ttes_simulation_models_new_ttes_post",
+                "summary": "Create And Run New Simulation",
+                "operationId": "create_and_run_new_simulation_simulations_post",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -102,7 +102,7 @@
                             "application/json": {
                                 "schema": {
                                     "type": "object",
-                                    "title": "Response Create And Run New Ttes Simulation Models New Ttes Post"
+                                    "title": "Response Create And Run New Simulation Simulations Post"
                                 }
                             }
                         }
@@ -561,6 +561,10 @@
                     "plain_password": {
                         "type": "string",
                         "title": "Plain Password"
+                    },
+                    "registration_key": {
+                        "type": "string",
+                        "title": "Registration Key"
                     }
                 },
                 "type": "object",
@@ -568,7 +572,8 @@
                     "user_name",
                     "email",
                     "full_name",
-                    "plain_password"
+                    "plain_password",
+                    "registration_key"
                 ],
                 "title": "UserCreate"
             },

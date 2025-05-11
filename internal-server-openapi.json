@@ -1,0 +1,173 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "FastAPI",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/variations": {
+            "get": {
+                "summary": "Create And Run New Simulation",
+                "operationId": "create_and_run_new_simulation_variations_get",
+                "parameters": [
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "enum": [
+                                "waiting"
+                            ],
+                            "const": "waiting",
+                            "type": "string",
+                            "title": "State"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/Variation"
+                                        }
+                                    },
+                                    "title": "Response Create And Run New Simulation Variations Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            },
+            "Variation": {
+                "properties": {
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 16
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id"
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created On"
+                    },
+                    "simulation_id": {
+                        "type": "string",
+                        "maxLength": 16,
+                        "title": "Simulation Id"
+                    },
+                    "object_storage_url": {
+                        "type": "string",
+                        "maxLength": 2083,
+                        "minLength": 1,
+                        "format": "uri",
+                        "title": "Object Storage Url"
+                    },
+                    "relative_deck_file_path": {
+                        "type": "string",
+                        "format": "path",
+                        "title": "Relative Deck File Path"
+                    },
+                    "relative_process_script_path": {
+                        "type": "string",
+                        "format": "path",
+                        "title": "Relative Process Script Path"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/VariationState",
+                        "default": "waiting"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "simulation_id",
+                    "object_storage_url",
+                    "relative_deck_file_path",
+                    "relative_process_script_path"
+                ],
+                "title": "Variation"
+            },
+            "VariationState": {
+                "type": "string",
+                "enum": [
+                    "waiting",
+                    "running",
+                    "done"
+                ],
+                "title": "VariationState"
+            }
+        }
+    }
+}
