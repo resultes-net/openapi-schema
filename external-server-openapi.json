@@ -44,6 +44,47 @@
             }
         },
         "/user": {
+            "put": {
+                "summary": "Modify User",
+                "operationId": "modify_user_user_put",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserModify"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserRead"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ]
+            },
             "post": {
                 "summary": "Create User",
                 "operationId": "create_user_user_post",
@@ -576,6 +617,24 @@
                     "registration_key"
                 ],
                 "title": "UserCreate"
+            },
+            "UserModify": {
+                "properties": {
+                    "old_plain_password": {
+                        "type": "string",
+                        "title": "Old Plain Password"
+                    },
+                    "new_plain_password": {
+                        "type": "string",
+                        "title": "New Plain Password"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "old_plain_password",
+                    "new_plain_password"
+                ],
+                "title": "UserModify"
             },
             "UserProvidedProfile": {
                 "properties": {
