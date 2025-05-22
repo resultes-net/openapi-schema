@@ -142,6 +142,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
+                                    "additionalProperties": true,
                                     "type": "object",
                                     "title": "Response Create And Run New Simulation Simulations Post"
                                 }
@@ -240,7 +241,12 @@
                         "title": "Orientation East West Deg"
                     },
                     "type": {
-                        "$ref": "#/components/schemas/CollectorType"
+                        "type": "string",
+                        "enum": [
+                            "flat-plate",
+                            "parallel-trough"
+                        ],
+                        "title": "Type"
                     },
                     "performance_coefficients": {
                         "$ref": "#/components/schemas/PerformanceCoefficients"
@@ -259,13 +265,6 @@
                     "nominal_massflow"
                 ],
                 "title": "CollectorField"
-            },
-            "CollectorType": {
-                "type": "string",
-                "enum": [
-                    "flat-plate",
-                    "parallel-trough"
-                ]
             },
             "Demand": {
                 "properties": {
@@ -334,9 +333,6 @@
                 "properties": {
                     "profile_type": {
                         "type": "string",
-                        "enum": [
-                            "predefined"
-                        ],
                         "const": "predefined",
                         "title": "Profile Type"
                     },
@@ -416,6 +412,11 @@
             },
             "TtesParameters": {
                 "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ttes",
+                        "title": "Type"
+                    },
                     "demand": {
                         "$ref": "#/components/schemas/Demand"
                     },
@@ -428,6 +429,7 @@
                 },
                 "type": "object",
                 "required": [
+                    "type",
                     "demand",
                     "collector_field",
                     "storage"
@@ -462,9 +464,6 @@
                 "properties": {
                     "size_type": {
                         "type": "string",
-                        "enum": [
-                            "absolute"
-                        ],
                         "const": "absolute",
                         "title": "Size Type"
                     },
@@ -484,9 +483,6 @@
                 "properties": {
                     "size_type": {
                         "type": "string",
-                        "enum": [
-                            "scaled-floor-area"
-                        ],
                         "const": "scaled-floor-area",
                         "title": "Size Type"
                     },
@@ -511,9 +507,6 @@
                 "properties": {
                     "size_type": {
                         "type": "string",
-                        "enum": [
-                            "scaled_height"
-                        ],
                         "const": "scaled_height",
                         "title": "Size Type"
                     },
@@ -640,9 +633,6 @@
                 "properties": {
                     "profile_type": {
                         "type": "string",
-                        "enum": [
-                            "user-provided"
-                        ],
                         "const": "user-provided",
                         "title": "Profile Type"
                     },
@@ -677,8 +667,7 @@
                     "id": {
                         "anyOf": [
                             {
-                                "type": "string",
-                                "maxLength": 16
+                                "type": "string"
                             },
                             {
                                 "type": "null"
@@ -696,6 +685,7 @@
                     "user_name",
                     "email",
                     "full_name",
+                    "id",
                     "disabled"
                 ],
                 "title": "UserRead"

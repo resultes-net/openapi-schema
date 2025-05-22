@@ -15,9 +15,6 @@
                         "in": "query",
                         "required": true,
                         "schema": {
-                            "enum": [
-                                "waiting"
-                            ],
                             "const": "waiting",
                             "type": "string",
                             "title": "State"
@@ -65,9 +62,6 @@
                         "in": "query",
                         "required": true,
                         "schema": {
-                            "enum": [
-                                "waiting-for-variations-creation"
-                            ],
                             "const": "waiting-for-variations-creation",
                             "type": "string",
                             "title": "State"
@@ -122,7 +116,12 @@
                         "title": "Orientation East West Deg"
                     },
                     "type": {
-                        "$ref": "#/components/schemas/CollectorType"
+                        "type": "string",
+                        "enum": [
+                            "flat-plate",
+                            "parallel-trough"
+                        ],
+                        "title": "Type"
                     },
                     "performance_coefficients": {
                         "$ref": "#/components/schemas/PerformanceCoefficients"
@@ -141,13 +140,6 @@
                     "nominal_massflow"
                 ],
                 "title": "CollectorField"
-            },
-            "CollectorType": {
-                "type": "string",
-                "enum": [
-                    "flat-plate",
-                    "parallel-trough"
-                ]
             },
             "Demand": {
                 "properties": {
@@ -216,9 +208,6 @@
                 "properties": {
                     "profile_type": {
                         "type": "string",
-                        "enum": [
-                            "predefined"
-                        ],
                         "const": "predefined",
                         "title": "Profile Type"
                     },
@@ -280,17 +269,24 @@
             },
             "Simulation": {
                 "properties": {
-                    "type": {
-                        "$ref": "#/components/schemas/Type"
-                    },
                     "parameters": {
-                        "$ref": "#/components/schemas/TtesParameters"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/TtesParameters"
+                            }
+                        ],
+                        "title": "Parameters",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "ttes": "#/components/schemas/TtesParameters"
+                            }
+                        }
                     },
                     "id": {
                         "anyOf": [
                             {
-                                "type": "string",
-                                "maxLength": 16
+                                "type": "string"
                             },
                             {
                                 "type": "null"
@@ -305,7 +301,6 @@
                     },
                     "user_id": {
                         "type": "string",
-                        "maxLength": 16,
                         "title": "User Id"
                     },
                     "object_storage_url": {
@@ -334,10 +329,12 @@
                 },
                 "type": "object",
                 "required": [
-                    "type",
                     "parameters",
+                    "id",
+                    "created_on",
                     "user_id",
-                    "object_storage_url"
+                    "object_storage_url",
+                    "state_changed_on"
                 ],
                 "title": "Simulation"
             },
@@ -353,6 +350,11 @@
             },
             "TtesParameters": {
                 "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ttes",
+                        "title": "Type"
+                    },
                     "demand": {
                         "$ref": "#/components/schemas/Demand"
                     },
@@ -365,6 +367,7 @@
                 },
                 "type": "object",
                 "required": [
+                    "type",
                     "demand",
                     "collector_field",
                     "storage"
@@ -399,9 +402,6 @@
                 "properties": {
                     "size_type": {
                         "type": "string",
-                        "enum": [
-                            "absolute"
-                        ],
                         "const": "absolute",
                         "title": "Size Type"
                     },
@@ -421,9 +421,6 @@
                 "properties": {
                     "size_type": {
                         "type": "string",
-                        "enum": [
-                            "scaled-floor-area"
-                        ],
                         "const": "scaled-floor-area",
                         "title": "Size Type"
                     },
@@ -448,9 +445,6 @@
                 "properties": {
                     "size_type": {
                         "type": "string",
-                        "enum": [
-                            "scaled_height"
-                        ],
                         "const": "scaled_height",
                         "title": "Size Type"
                     },
@@ -521,22 +515,10 @@
                 ],
                 "title": "TtesStorage"
             },
-            "Type": {
-                "type": "string",
-                "enum": [
-                    "ttes",
-                    "ptes",
-                    "btes"
-                ],
-                "title": "Type"
-            },
             "UserProvidedProfile": {
                 "properties": {
                     "profile_type": {
                         "type": "string",
-                        "enum": [
-                            "user-provided"
-                        ],
                         "const": "user-provided",
                         "title": "Profile Type"
                     },
