@@ -394,19 +394,25 @@
             },
             "Token": {
                 "properties": {
-                    "access_token": {
-                        "type": "string",
-                        "title": "Access Token"
-                    },
                     "token_type": {
                         "type": "string",
                         "title": "Token Type"
+                    },
+                    "valid_until": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Valid Until"
+                    },
+                    "access_token": {
+                        "type": "string",
+                        "title": "Access Token"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "access_token",
-                    "token_type"
+                    "token_type",
+                    "valid_until",
+                    "access_token"
                 ],
                 "title": "Token"
             },
