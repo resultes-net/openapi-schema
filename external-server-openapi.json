@@ -130,7 +130,18 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/TtesParameters"
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/TtesParameters"
+                                    }
+                                ],
+                                "title": "Parameters",
+                                "discriminator": {
+                                    "propertyName": "type",
+                                    "mapping": {
+                                        "ttes": "#/components/schemas/TtesParameters"
+                                    }
+                                }
                             }
                         }
                     },
@@ -670,20 +681,13 @@
                         "type": "string",
                         "title": "Full Name"
                     },
-                    "id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Id"
-                    },
                     "disabled": {
                         "type": "boolean",
                         "title": "Disabled"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
                     }
                 },
                 "type": "object",
@@ -691,8 +695,8 @@
                     "user_name",
                     "email",
                     "full_name",
-                    "id",
-                    "disabled"
+                    "disabled",
+                    "id"
                 ],
                 "title": "UserRead"
             },

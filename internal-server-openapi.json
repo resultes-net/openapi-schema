@@ -5,57 +5,10 @@
         "version": "0.1.0"
     },
     "paths": {
-        "/variations": {
-            "get": {
-                "summary": "Get Waiting Variations By User Id",
-                "operationId": "get_waiting_variations_by_user_id_variations_get",
-                "parameters": [
-                    {
-                        "name": "state",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "const": "waiting",
-                            "type": "string",
-                            "title": "State"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful Response",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/Variation"
-                                        }
-                                    },
-                                    "title": "Response Get Waiting Variations By User Id Variations Get"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Validation Error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/HTTPValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/simulations": {
             "get": {
-                "summary": "Get Simulations Waiting For Variations Creation By User Id",
-                "operationId": "get_simulations_waiting_for_variations_creation_by_user_id_simulations_get",
+                "summary": "Get Simulations Waiting For Variations Creation",
+                "operationId": "get_simulations_waiting_for_variations_creation_simulations_get",
                 "parameters": [
                     {
                         "name": "state",
@@ -74,14 +27,172 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/components/schemas/Simulation"
-                                        }
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Simulation"
                                     },
-                                    "title": "Response Get Simulations Waiting For Variations Creation By User Id Simulations Get"
+                                    "title": "Response Get Simulations Waiting For Variations Creation Simulations Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/waiting-variations": {
+            "get": {
+                "summary": "Get Waiting Variations",
+                "operationId": "get_waiting_variations_waiting_variations_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WaitingVariations"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/simulations/{simulation_id}/state": {
+            "put": {
+                "summary": "Update Simulation State",
+                "operationId": "update_simulation_state_simulations__simulation_id__state_put",
+                "parameters": [
+                    {
+                        "name": "simulation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Simulation Id"
+                        }
+                    },
+                    {
+                        "name": "new_state",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/SimulationState"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SimulationState"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/simulations/{simulation_id}/variations": {
+            "post": {
+                "summary": "Create Variation",
+                "operationId": "create_variation_simulations__simulation_id__variations_post",
+                "parameters": [
+                    {
+                        "name": "simulation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Simulation Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateVariation"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Variation"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/variations/{variation_id}/state": {
+            "put": {
+                "summary": "Update Variation State",
+                "operationId": "update_variation_state_variations__variation_id__state_put",
+                "parameters": [
+                    {
+                        "name": "variation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Variation Id"
+                        }
+                    },
+                    {
+                        "name": "new_state",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/VariationState"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/VariationState"
                                 }
                             }
                         }
@@ -140,6 +251,18 @@
                     "nominal_massflow"
                 ],
                 "title": "CollectorField"
+            },
+            "CreateVariation": {
+                "properties": {
+                    "relative_deck_file_containing_dir_path": {
+                        "title": "Relative Deck File Containing Dir Path"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "relative_deck_file_containing_dir_path"
+                ],
+                "title": "CreateVariation"
             },
             "Demand": {
                 "properties": {
@@ -269,6 +392,10 @@
             },
             "Simulation": {
                 "properties": {
+                    "state": {
+                        "$ref": "#/components/schemas/SimulationState",
+                        "default": "waiting-for-variations-creation"
+                    },
                     "parameters": {
                         "oneOf": [
                             {
@@ -282,17 +409,6 @@
                                 "ttes": "#/components/schemas/TtesParameters"
                             }
                         }
-                    },
-                    "id": {
-                        "anyOf": [
-                            {
-                                "type": "string"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Id"
                     },
                     "created_on": {
                         "type": "string",
@@ -317,24 +433,24 @@
                         ],
                         "title": "Object Storage Url"
                     },
-                    "state": {
-                        "$ref": "#/components/schemas/SimulationState",
-                        "default": "waiting-for-variations-creation"
-                    },
                     "state_changed_on": {
                         "type": "string",
                         "format": "date-time",
                         "title": "State Changed On"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
                     }
                 },
                 "type": "object",
                 "required": [
                     "parameters",
-                    "id",
                     "created_on",
                     "user_id",
                     "object_storage_url",
-                    "state_changed_on"
+                    "state_changed_on",
+                    "id"
                 ],
                 "title": "Simulation"
             },
@@ -342,8 +458,11 @@
                 "type": "string",
                 "enum": [
                     "waiting-for-variations-creation",
+                    "creating-variations",
                     "waiting-for-variation-runs",
+                    "running-variations",
                     "waiting-for-cross-variation-processing",
+                    "cross-processing-variations",
                     "done"
                 ],
                 "title": "SimulationState"
@@ -570,56 +689,40 @@
             },
             "Variation": {
                 "properties": {
-                    "id": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "maxLength": 16
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Id"
+                    "state": {
+                        "$ref": "#/components/schemas/VariationState",
+                        "default": "waiting"
+                    },
+                    "relative_deck_file_containing_dir_path": {
+                        "type": "string",
+                        "title": "Relative Deck File Containing Dir Path"
                     },
                     "created_on": {
                         "type": "string",
                         "format": "date-time",
                         "title": "Created On"
                     },
+                    "state_changed_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "State Changed On"
+                    },
                     "simulation_id": {
                         "type": "string",
-                        "maxLength": 16,
                         "title": "Simulation Id"
                     },
-                    "object_storage_url": {
+                    "id": {
                         "type": "string",
-                        "maxLength": 2083,
-                        "minLength": 1,
-                        "format": "uri",
-                        "title": "Object Storage Url"
-                    },
-                    "relative_deck_file_path": {
-                        "type": "string",
-                        "format": "path",
-                        "title": "Relative Deck File Path"
-                    },
-                    "relative_process_script_path": {
-                        "type": "string",
-                        "format": "path",
-                        "title": "Relative Process Script Path"
-                    },
-                    "state": {
-                        "$ref": "#/components/schemas/VariationState",
-                        "default": "waiting"
+                        "title": "Id"
                     }
                 },
                 "type": "object",
                 "required": [
+                    "relative_deck_file_containing_dir_path",
+                    "created_on",
+                    "state_changed_on",
                     "simulation_id",
-                    "object_storage_url",
-                    "relative_deck_file_path",
-                    "relative_process_script_path"
+                    "id"
                 ],
                 "title": "Variation"
             },
@@ -631,6 +734,38 @@
                     "done"
                 ],
                 "title": "VariationState"
+            },
+            "WaitingVariations": {
+                "properties": {
+                    "waiting_variations": {
+                        "items": {
+                            "$ref": "#/components/schemas/Variation"
+                        },
+                        "type": "array",
+                        "title": "Waiting Variations"
+                    },
+                    "associated_simulations": {
+                        "items": {
+                            "$ref": "#/components/schemas/Simulation"
+                        },
+                        "type": "array",
+                        "title": "Associated Simulations"
+                    },
+                    "other_variations": {
+                        "items": {
+                            "$ref": "#/components/schemas/Variation"
+                        },
+                        "type": "array",
+                        "title": "Other Variations"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "waiting_variations",
+                    "associated_simulations",
+                    "other_variations"
+                ],
+                "title": "WaitingVariations"
             }
         }
     }
