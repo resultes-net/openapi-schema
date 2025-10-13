@@ -132,14 +132,15 @@
                             "schema": {
                                 "oneOf": [
                                     {
-                                        "$ref": "#/components/schemas/TtesParameters"
+                                        "$ref": "#/components/schemas/Parameters"
                                     }
                                 ],
                                 "title": "Parameters",
                                 "discriminator": {
                                     "propertyName": "type",
                                     "mapping": {
-                                        "ttes": "#/components/schemas/TtesParameters"
+                                        "ttes": "#/components/schemas/Parameters",
+                                        "ptes": "#/components/schemas/Parameters"
                                     }
                                 }
                             }
@@ -317,6 +318,16 @@
                 "type": "object",
                 "title": "HTTPValidationError"
             },
+            "Parameters": {
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/TtesParameters"
+                    },
+                    {
+                        "$ref": "#/components/schemas/PtesParameters"
+                    }
+                ]
+            },
             "PerformanceCoefficients": {
                 "properties": {
                     "a0": {
@@ -358,6 +369,37 @@
                     "name"
                 ],
                 "title": "PreDefinedProfile"
+            },
+            "PtesParameters": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ptes",
+                        "title": "Type"
+                    },
+                    "demand": {
+                        "$ref": "#/components/schemas/Demand"
+                    },
+                    "collector_field": {
+                        "$ref": "#/components/schemas/CollectorField"
+                    },
+                    "storage": {
+                        "$ref": "#/components/schemas/PtesStorage"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "demand",
+                    "collector_field",
+                    "storage"
+                ],
+                "title": "PtesParameters"
+            },
+            "PtesStorage": {
+                "properties": {},
+                "type": "object",
+                "title": "PtesStorage"
             },
             "ScaledValue_Literal__absolute_kg_per_h____relative_to_collector_area_kg_per_h_m2___": {
                 "properties": {
