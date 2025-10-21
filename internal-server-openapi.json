@@ -346,6 +346,37 @@
                 ],
                 "title": "PreDefinedProfile"
             },
+            "PtesParameters": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ptes",
+                        "title": "Type"
+                    },
+                    "demand": {
+                        "$ref": "#/components/schemas/Demand"
+                    },
+                    "collector_field": {
+                        "$ref": "#/components/schemas/CollectorField"
+                    },
+                    "storage": {
+                        "$ref": "#/components/schemas/PtesStorage"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "demand",
+                    "collector_field",
+                    "storage"
+                ],
+                "title": "PtesParameters"
+            },
+            "PtesStorage": {
+                "properties": {},
+                "type": "object",
+                "title": "PtesStorage"
+            },
             "ScaledValue_Literal__absolute_kg_per_h____relative_to_collector_area_kg_per_h_m2___": {
                 "properties": {
                     "scaling": {
@@ -396,16 +427,25 @@
                         "$ref": "#/components/schemas/SimulationState",
                         "default": "waiting-for-variations-creation"
                     },
+                    "state_changed_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "State Changed On"
+                    },
                     "parameters": {
                         "oneOf": [
                             {
                                 "$ref": "#/components/schemas/TtesParameters"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PtesParameters"
                             }
                         ],
                         "title": "Parameters",
                         "discriminator": {
                             "propertyName": "type",
                             "mapping": {
+                                "ptes": "#/components/schemas/PtesParameters",
                                 "ttes": "#/components/schemas/TtesParameters"
                             }
                         }
@@ -433,24 +473,27 @@
                         ],
                         "title": "Object Storage Url"
                     },
-                    "state_changed_on": {
-                        "type": "string",
-                        "format": "date-time",
-                        "title": "State Changed On"
-                    },
                     "id": {
                         "type": "string",
                         "title": "Id"
+                    },
+                    "variations": {
+                        "items": {
+                            "$ref": "#/components/schemas/Variation"
+                        },
+                        "type": "array",
+                        "title": "Variations"
                     }
                 },
                 "type": "object",
                 "required": [
+                    "state_changed_on",
                     "parameters",
                     "created_on",
                     "user_id",
                     "object_storage_url",
-                    "state_changed_on",
-                    "id"
+                    "id",
+                    "variations"
                 ],
                 "title": "Simulation"
             },

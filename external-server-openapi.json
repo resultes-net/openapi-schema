@@ -123,6 +123,31 @@
             }
         },
         "/simulations": {
+            "get": {
+                "summary": "Get Simulations",
+                "operationId": "get_simulations_simulations_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/Simulation"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get Simulations Simulations Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ]
+            },
             "post": {
                 "summary": "Create And Run New Simulation",
                 "operationId": "create_and_run_new_simulation_simulations_post",
@@ -177,6 +202,57 @@
                         "OAuth2PasswordBearer": []
                     }
                 ]
+            }
+        },
+        "/variations/{variation_id}/results/{result_path}": {
+            "get": {
+                "summary": "Get Variation Result",
+                "operationId": "get_variation_result_variations__variation_id__results__result_path__get",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "variation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Variation Id"
+                        }
+                    },
+                    {
+                        "name": "result_path",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Result Path"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     },
@@ -321,10 +397,10 @@
             "Parameters": {
                 "anyOf": [
                     {
-                        "$ref": "#/components/schemas/TtesParameters"
+                        "$ref": "#/components/schemas/TtesParameters-Input"
                     },
                     {
-                        "$ref": "#/components/schemas/PtesParameters"
+                        "$ref": "#/components/schemas/PtesParameters-Input"
                     }
                 ]
             },
@@ -370,7 +446,33 @@
                 ],
                 "title": "PreDefinedProfile"
             },
-            "PtesParameters": {
+            "PtesParameters-Input": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ptes",
+                        "title": "Type"
+                    },
+                    "demand": {
+                        "$ref": "#/components/schemas/Demand"
+                    },
+                    "collector_field": {
+                        "$ref": "#/components/schemas/CollectorField"
+                    },
+                    "storage": {
+                        "$ref": "#/components/schemas/PtesStorage"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "demand",
+                    "collector_field",
+                    "storage"
+                ],
+                "title": "PtesParameters"
+            },
+            "PtesParameters-Output": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -445,6 +547,95 @@
                 ],
                 "title": "ScaledValue[Literal['absolute_m2', 'relative_to_demand_m2_per_GWh']]"
             },
+            "Simulation": {
+                "properties": {
+                    "state": {
+                        "$ref": "#/components/schemas/SimulationState",
+                        "default": "waiting-for-variations-creation"
+                    },
+                    "state_changed_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "State Changed On"
+                    },
+                    "parameters": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/TtesParameters-Output"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PtesParameters-Output"
+                            }
+                        ],
+                        "title": "Parameters",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "ptes": "#/components/schemas/PtesParameters-Output",
+                                "ttes": "#/components/schemas/TtesParameters-Output"
+                            }
+                        }
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created On"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id"
+                    },
+                    "object_storage_url": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 2083,
+                                "minLength": 1,
+                                "format": "uri"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Object Storage Url"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "variations": {
+                        "items": {
+                            "$ref": "#/components/schemas/Variation"
+                        },
+                        "type": "array",
+                        "title": "Variations"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "state_changed_on",
+                    "parameters",
+                    "created_on",
+                    "user_id",
+                    "object_storage_url",
+                    "id",
+                    "variations"
+                ],
+                "title": "Simulation"
+            },
+            "SimulationState": {
+                "type": "string",
+                "enum": [
+                    "waiting-for-variations-creation",
+                    "creating-variations",
+                    "waiting-for-variation-runs",
+                    "running-variations",
+                    "waiting-for-cross-variation-processing",
+                    "cross-processing-variations",
+                    "done"
+                ],
+                "title": "SimulationState"
+            },
             "Token": {
                 "properties": {
                     "token_type": {
@@ -469,7 +660,33 @@
                 ],
                 "title": "Token"
             },
-            "TtesParameters": {
+            "TtesParameters-Input": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ttes",
+                        "title": "Type"
+                    },
+                    "demand": {
+                        "$ref": "#/components/schemas/Demand"
+                    },
+                    "collector_field": {
+                        "$ref": "#/components/schemas/CollectorField"
+                    },
+                    "storage": {
+                        "$ref": "#/components/schemas/TtesStorage"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "demand",
+                    "collector_field",
+                    "storage"
+                ],
+                "title": "TtesParameters"
+            },
+            "TtesParameters-Output": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -774,6 +991,54 @@
                     "type"
                 ],
                 "title": "ValidationError"
+            },
+            "Variation": {
+                "properties": {
+                    "state": {
+                        "$ref": "#/components/schemas/VariationState",
+                        "default": "waiting"
+                    },
+                    "relative_deck_file_containing_dir_path": {
+                        "type": "string",
+                        "title": "Relative Deck File Containing Dir Path"
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created On"
+                    },
+                    "state_changed_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "State Changed On"
+                    },
+                    "simulation_id": {
+                        "type": "string",
+                        "title": "Simulation Id"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "relative_deck_file_containing_dir_path",
+                    "created_on",
+                    "state_changed_on",
+                    "simulation_id",
+                    "id"
+                ],
+                "title": "Variation"
+            },
+            "VariationState": {
+                "type": "string",
+                "enum": [
+                    "waiting",
+                    "running",
+                    "done"
+                ],
+                "title": "VariationState"
             }
         },
         "securitySchemes": {
