@@ -155,19 +155,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "oneOf": [
-                                    {
-                                        "$ref": "#/components/schemas/Parameters"
-                                    }
-                                ],
-                                "title": "Parameters",
-                                "discriminator": {
-                                    "propertyName": "type",
-                                    "mapping": {
-                                        "ttes": "#/components/schemas/Parameters",
-                                        "ptes": "#/components/schemas/Parameters"
-                                    }
-                                }
+                                "$ref": "#/components/schemas/Parameters-Input"
                             }
                         }
                     },
@@ -202,6 +190,94 @@
                         "OAuth2PasswordBearer": []
                     }
                 ]
+            }
+        },
+        "/simulations/{simulation_id}": {
+            "get": {
+                "summary": "Get Simulation",
+                "operationId": "get_simulation_simulations__simulation_id__get",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "simulation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Simulation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Simulation"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/variations/{variation_id}": {
+            "get": {
+                "summary": "Get Variation",
+                "operationId": "get_variation_variations__variation_id__get",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "variation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Variation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Variation"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/variations/{variation_id}/results/{result_path}": {
@@ -394,15 +470,59 @@
                 "type": "object",
                 "title": "HTTPValidationError"
             },
-            "Parameters": {
-                "anyOf": [
-                    {
-                        "$ref": "#/components/schemas/TtesParameters-Input"
-                    },
-                    {
-                        "$ref": "#/components/schemas/PtesParameters-Input"
+            "Parameters-Input": {
+                "properties": {
+                    "values": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/TtesParameters-Input"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PtesParameters-Input"
+                            }
+                        ],
+                        "title": "Values",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "ptes": "#/components/schemas/PtesParameters-Input",
+                                "ttes": "#/components/schemas/TtesParameters-Input"
+                            }
+                        }
                     }
-                ]
+                },
+                "type": "object",
+                "required": [
+                    "values"
+                ],
+                "title": "Parameters"
+            },
+            "Parameters-Output": {
+                "properties": {
+                    "values": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/TtesParameters-Output"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PtesParameters-Output"
+                            }
+                        ],
+                        "title": "Values",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "ptes": "#/components/schemas/PtesParameters-Output",
+                                "ttes": "#/components/schemas/TtesParameters-Output"
+                            }
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "values"
+                ],
+                "title": "Parameters"
             },
             "PerformanceCoefficients": {
                 "properties": {
@@ -553,28 +673,17 @@
                         "$ref": "#/components/schemas/SimulationState",
                         "default": "waiting-for-variations-creation"
                     },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
                     "state_changed_on": {
                         "type": "string",
                         "format": "date-time",
                         "title": "State Changed On"
                     },
                     "parameters": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/TtesParameters-Output"
-                            },
-                            {
-                                "$ref": "#/components/schemas/PtesParameters-Output"
-                            }
-                        ],
-                        "title": "Parameters",
-                        "discriminator": {
-                            "propertyName": "type",
-                            "mapping": {
-                                "ptes": "#/components/schemas/PtesParameters-Output",
-                                "ttes": "#/components/schemas/TtesParameters-Output"
-                            }
-                        }
+                        "$ref": "#/components/schemas/Parameters-Output"
                     },
                     "created_on": {
                         "type": "string",
@@ -599,10 +708,6 @@
                         ],
                         "title": "Object Storage Url"
                     },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
                     "variations": {
                         "items": {
                             "$ref": "#/components/schemas/Variation"
@@ -613,12 +718,12 @@
                 },
                 "type": "object",
                 "required": [
+                    "id",
                     "state_changed_on",
                     "parameters",
                     "created_on",
                     "user_id",
                     "object_storage_url",
-                    "id",
                     "variations"
                 ],
                 "title": "Simulation"
@@ -1002,6 +1107,10 @@
                         "type": "string",
                         "title": "Relative Deck File Containing Dir Path"
                     },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
                     "created_on": {
                         "type": "string",
                         "format": "date-time",
@@ -1015,19 +1124,15 @@
                     "simulation_id": {
                         "type": "string",
                         "title": "Simulation Id"
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
                     }
                 },
                 "type": "object",
                 "required": [
                     "relative_deck_file_containing_dir_path",
+                    "id",
                     "created_on",
                     "state_changed_on",
-                    "simulation_id",
-                    "id"
+                    "simulation_id"
                 ],
                 "title": "Variation"
             },

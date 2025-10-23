@@ -304,6 +304,33 @@
                 "type": "object",
                 "title": "HTTPValidationError"
             },
+            "Parameters": {
+                "properties": {
+                    "values": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/TtesParameters"
+                            },
+                            {
+                                "$ref": "#/components/schemas/PtesParameters"
+                            }
+                        ],
+                        "title": "Values",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "ptes": "#/components/schemas/PtesParameters",
+                                "ttes": "#/components/schemas/TtesParameters"
+                            }
+                        }
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "values"
+                ],
+                "title": "Parameters"
+            },
             "PerformanceCoefficients": {
                 "properties": {
                     "a0": {
@@ -427,28 +454,17 @@
                         "$ref": "#/components/schemas/SimulationState",
                         "default": "waiting-for-variations-creation"
                     },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
                     "state_changed_on": {
                         "type": "string",
                         "format": "date-time",
                         "title": "State Changed On"
                     },
                     "parameters": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/TtesParameters"
-                            },
-                            {
-                                "$ref": "#/components/schemas/PtesParameters"
-                            }
-                        ],
-                        "title": "Parameters",
-                        "discriminator": {
-                            "propertyName": "type",
-                            "mapping": {
-                                "ptes": "#/components/schemas/PtesParameters",
-                                "ttes": "#/components/schemas/TtesParameters"
-                            }
-                        }
+                        "$ref": "#/components/schemas/Parameters"
                     },
                     "created_on": {
                         "type": "string",
@@ -473,10 +489,6 @@
                         ],
                         "title": "Object Storage Url"
                     },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
                     "variations": {
                         "items": {
                             "$ref": "#/components/schemas/Variation"
@@ -487,12 +499,12 @@
                 },
                 "type": "object",
                 "required": [
+                    "id",
                     "state_changed_on",
                     "parameters",
                     "created_on",
                     "user_id",
                     "object_storage_url",
-                    "id",
                     "variations"
                 ],
                 "title": "Simulation"
@@ -740,6 +752,10 @@
                         "type": "string",
                         "title": "Relative Deck File Containing Dir Path"
                     },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
                     "created_on": {
                         "type": "string",
                         "format": "date-time",
@@ -753,19 +769,15 @@
                     "simulation_id": {
                         "type": "string",
                         "title": "Simulation Id"
-                    },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
                     }
                 },
                 "type": "object",
                 "required": [
                     "relative_deck_file_containing_dir_path",
+                    "id",
                     "created_on",
                     "state_changed_on",
-                    "simulation_id",
-                    "id"
+                    "simulation_id"
                 ],
                 "title": "Variation"
             },
