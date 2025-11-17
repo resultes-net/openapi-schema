@@ -394,7 +394,7 @@
             "CollectorField": {
                 "properties": {
                     "area": {
-                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m2____relative_to_demand_m2_per_GWh___"
+                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m2____relative_to_demand_m2_per_MWh___"
                     },
                     "inclination_deg": {
                         "type": "number",
@@ -619,8 +619,15 @@
                 "title": "PtesParameters"
             },
             "PtesStorage": {
-                "properties": {},
+                "properties": {
+                    "volume": {
+                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh___"
+                    }
+                },
                 "type": "object",
+                "required": [
+                    "volume"
+                ],
                 "title": "PtesStorage"
             },
             "ScaledValue_Literal__absolute_kg_per_h____relative_to_collector_area_kg_per_h_m2___": {
@@ -645,13 +652,13 @@
                 ],
                 "title": "ScaledValue[Literal['absolute_kg_per_h', 'relative_to_collector_area_kg_per_h_m2']]"
             },
-            "ScaledValue_Literal__absolute_m2____relative_to_demand_m2_per_GWh___": {
+            "ScaledValue_Literal__absolute_m2____relative_to_demand_m2_per_MWh___": {
                 "properties": {
                     "scaling": {
                         "type": "string",
                         "enum": [
                             "absolute_m2",
-                            "relative_to_demand_m2_per_GWh"
+                            "relative_to_demand_m2_per_MWh"
                         ],
                         "title": "Scaling"
                     },
@@ -665,7 +672,29 @@
                     "scaling",
                     "value"
                 ],
-                "title": "ScaledValue[Literal['absolute_m2', 'relative_to_demand_m2_per_GWh']]"
+                "title": "ScaledValue[Literal['absolute_m2', 'relative_to_demand_m2_per_MWh']]"
+            },
+            "ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh___": {
+                "properties": {
+                    "scaling": {
+                        "type": "string",
+                        "enum": [
+                            "absolute_m3",
+                            "relative_to_demand_m3_per_MWh"
+                        ],
+                        "title": "Scaling"
+                    },
+                    "value": {
+                        "type": "number",
+                        "title": "Value"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "scaling",
+                    "value"
+                ],
+                "title": "ScaledValue[Literal['absolute_m3', 'relative_to_demand_m3_per_MWh']]"
             },
             "Simulation": {
                 "properties": {
