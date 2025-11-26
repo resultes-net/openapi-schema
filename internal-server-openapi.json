@@ -504,20 +504,6 @@
                         "type": "string",
                         "title": "User Id"
                     },
-                    "object_storage_url": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "maxLength": 2083,
-                                "minLength": 1,
-                                "format": "uri"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Object Storage Url"
-                    },
                     "variations": {
                         "items": {
                             "$ref": "#/components/schemas/Variation"
@@ -533,7 +519,6 @@
                     "parameters",
                     "created_on",
                     "user_id",
-                    "object_storage_url",
                     "variations"
                 ],
                 "title": "Simulation"

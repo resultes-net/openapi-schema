@@ -167,9 +167,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "additionalProperties": true,
-                                    "type": "object",
-                                    "title": "Response Create And Run New Simulation Simulations Post"
+                                    "$ref": "#/components/schemas/SimulationBase"
                                 }
                             }
                         }
@@ -723,20 +721,6 @@
                         "type": "string",
                         "title": "User Id"
                     },
-                    "object_storage_url": {
-                        "anyOf": [
-                            {
-                                "type": "string",
-                                "maxLength": 2083,
-                                "minLength": 1,
-                                "format": "uri"
-                            },
-                            {
-                                "type": "null"
-                            }
-                        ],
-                        "title": "Object Storage Url"
-                    },
                     "variations": {
                         "items": {
                             "$ref": "#/components/schemas/Variation"
@@ -752,10 +736,47 @@
                     "parameters",
                     "created_on",
                     "user_id",
-                    "object_storage_url",
                     "variations"
                 ],
                 "title": "Simulation"
+            },
+            "SimulationBase": {
+                "properties": {
+                    "state": {
+                        "$ref": "#/components/schemas/SimulationState",
+                        "default": "waiting-for-variations-creation"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "state_changed_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "State Changed On"
+                    },
+                    "parameters": {
+                        "$ref": "#/components/schemas/Parameters-Output"
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created On"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "title": "User Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id",
+                    "state_changed_on",
+                    "parameters",
+                    "created_on",
+                    "user_id"
+                ],
+                "title": "SimulationBase"
             },
             "SimulationState": {
                 "type": "string",
