@@ -328,6 +328,48 @@
                     }
                 }
             }
+        },
+        "/variations/{variation_id}/results": {
+            "get": {
+                "summary": "Get Variation Results",
+                "operationId": "get_variation_results_variations__variation_id__results_get",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "variation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Variation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -571,6 +613,9 @@
                         "const": "ptes",
                         "title": "Type"
                     },
+                    "time": {
+                        "$ref": "#/components/schemas/Time"
+                    },
                     "demand": {
                         "$ref": "#/components/schemas/Demand"
                     },
@@ -584,6 +629,7 @@
                 "type": "object",
                 "required": [
                     "type",
+                    "time",
                     "demand",
                     "collector_field",
                     "storage"
@@ -597,6 +643,9 @@
                         "const": "ptes",
                         "title": "Type"
                     },
+                    "time": {
+                        "$ref": "#/components/schemas/Time"
+                    },
                     "demand": {
                         "$ref": "#/components/schemas/Demand"
                     },
@@ -610,6 +659,7 @@
                 "type": "object",
                 "required": [
                     "type",
+                    "time",
                     "demand",
                     "collector_field",
                     "storage"
@@ -790,6 +840,32 @@
                     "done"
                 ],
                 "title": "SimulationState"
+            },
+            "Time": {
+                "properties": {
+                    "start": {
+                        "type": "integer",
+                        "minimum": 0.0,
+                        "title": "Start"
+                    },
+                    "stop": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0.0,
+                        "title": "Stop"
+                    },
+                    "dt_sim": {
+                        "type": "number",
+                        "exclusiveMinimum": 0.0,
+                        "title": "Dt Sim"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "start",
+                    "stop",
+                    "dt_sim"
+                ],
+                "title": "Time"
             },
             "Token": {
                 "properties": {
@@ -1149,10 +1225,6 @@
             },
             "Variation": {
                 "properties": {
-                    "state": {
-                        "$ref": "#/components/schemas/VariationState",
-                        "default": "waiting"
-                    },
                     "relative_deck_file_containing_dir_path": {
                         "type": "string",
                         "title": "Relative Deck File Containing Dir Path"
@@ -1166,10 +1238,19 @@
                         "format": "date-time",
                         "title": "Created On"
                     },
+                    "state": {
+                        "$ref": "#/components/schemas/VariationState",
+                        "default": "waiting"
+                    },
                     "state_changed_on": {
                         "type": "string",
                         "format": "date-time",
                         "title": "State Changed On"
+                    },
+                    "progress": {
+                        "type": "integer",
+                        "title": "Progress",
+                        "default": 0
                     },
                     "simulation_id": {
                         "type": "string",

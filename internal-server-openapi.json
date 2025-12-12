@@ -67,10 +67,10 @@
                 }
             }
         },
-        "/simulations/{simulation_id}/state": {
-            "put": {
-                "summary": "Update Simulation State",
-                "operationId": "update_simulation_state_simulations__simulation_id__state_put",
+        "/simulations/{simulation_id}/variations": {
+            "get": {
+                "summary": "Get Variations",
+                "operationId": "get_variations_simulations__simulation_id__variations_get",
                 "parameters": [
                     {
                         "name": "simulation_id",
@@ -80,14 +80,6 @@
                             "type": "string",
                             "title": "Simulation Id"
                         }
-                    },
-                    {
-                        "name": "new_state",
-                        "in": "query",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/components/schemas/SimulationState"
-                        }
                     }
                 ],
                 "responses": {
@@ -96,7 +88,11 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SimulationState"
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Variation"
+                                    },
+                                    "title": "Response Get Variations Simulations  Simulation Id  Variations Get"
                                 }
                             }
                         }
@@ -112,9 +108,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/simulations/{simulation_id}/variations": {
+            },
             "post": {
                 "summary": "Create Variation",
                 "operationId": "create_variation_simulations__simulation_id__variations_post",
@@ -146,6 +140,53 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Variation"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/simulations/{simulation_id}/state": {
+            "put": {
+                "summary": "Update Simulation State",
+                "operationId": "update_simulation_state_simulations__simulation_id__state_put",
+                "parameters": [
+                    {
+                        "name": "simulation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Simulation Id"
+                        }
+                    },
+                    {
+                        "name": "new_state",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/SimulationState"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SimulationState"
                                 }
                             }
                         }
@@ -380,6 +421,9 @@
                         "const": "ptes",
                         "title": "Type"
                     },
+                    "time": {
+                        "$ref": "#/components/schemas/Time"
+                    },
                     "demand": {
                         "$ref": "#/components/schemas/Demand"
                     },
@@ -393,6 +437,7 @@
                 "type": "object",
                 "required": [
                     "type",
+                    "time",
                     "demand",
                     "collector_field",
                     "storage"
@@ -535,6 +580,32 @@
                     "done"
                 ],
                 "title": "SimulationState"
+            },
+            "Time": {
+                "properties": {
+                    "start": {
+                        "type": "integer",
+                        "minimum": 0.0,
+                        "title": "Start"
+                    },
+                    "stop": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0.0,
+                        "title": "Stop"
+                    },
+                    "dt_sim": {
+                        "type": "number",
+                        "exclusiveMinimum": 0.0,
+                        "title": "Dt Sim"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "start",
+                    "stop",
+                    "dt_sim"
+                ],
+                "title": "Time"
             },
             "TtesParameters": {
                 "properties": {
@@ -758,10 +829,6 @@
             },
             "Variation": {
                 "properties": {
-                    "state": {
-                        "$ref": "#/components/schemas/VariationState",
-                        "default": "waiting"
-                    },
                     "relative_deck_file_containing_dir_path": {
                         "type": "string",
                         "title": "Relative Deck File Containing Dir Path"
@@ -775,10 +842,19 @@
                         "format": "date-time",
                         "title": "Created On"
                     },
+                    "state": {
+                        "$ref": "#/components/schemas/VariationState",
+                        "default": "waiting"
+                    },
                     "state_changed_on": {
                         "type": "string",
                         "format": "date-time",
                         "title": "State Changed On"
+                    },
+                    "progress": {
+                        "type": "integer",
+                        "title": "Progress",
+                        "default": 0
                     },
                     "simulation_id": {
                         "type": "string",
