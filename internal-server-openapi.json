@@ -49,6 +49,45 @@
                 }
             }
         },
+        "/simulation/{simulation_id}": {
+            "get": {
+                "summary": "Get Simulation",
+                "operationId": "get_simulation_simulation__simulation_id__get",
+                "parameters": [
+                    {
+                        "name": "simulation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Simulation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Simulation"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/waiting-variations": {
             "get": {
                 "summary": "Get Waiting Variations",
@@ -204,6 +243,56 @@
                 }
             }
         },
+        "/simulations/{simulation_id}/progress": {
+            "put": {
+                "summary": "Update Simulation Progress",
+                "operationId": "update_simulation_progress_simulations__simulation_id__progress_put",
+                "parameters": [
+                    {
+                        "name": "simulation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Simulation Id"
+                        }
+                    },
+                    {
+                        "name": "new_progress",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "title": "New Progress"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "title": "Response Update Simulation Progress Simulations  Simulation Id  Progress Put"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/variations/{variation_id}/state": {
             "put": {
                 "summary": "Update Variation State",
@@ -234,6 +323,56 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/VariationState"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/variations/{variation_id}/progress": {
+            "put": {
+                "summary": "Update Variation Progress",
+                "operationId": "update_variation_progress_variations__variation_id__progress_put",
+                "parameters": [
+                    {
+                        "name": "variation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Variation Id"
+                        }
+                    },
+                    {
+                        "name": "new_progress",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "title": "New Progress"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "integer",
+                                    "title": "Response Update Variation Progress Variations  Variation Id  Progress Put"
                                 }
                             }
                         }
@@ -537,6 +676,12 @@
                         "format": "date-time",
                         "title": "State Changed On"
                     },
+                    "progress": {
+                        "type": "integer",
+                        "minimum": 0.0,
+                        "title": "Progress",
+                        "default": 0
+                    },
                     "parameters": {
                         "$ref": "#/components/schemas/Parameters"
                     },
@@ -614,6 +759,9 @@
                         "const": "ttes",
                         "title": "Type"
                     },
+                    "time": {
+                        "$ref": "#/components/schemas/Time"
+                    },
                     "demand": {
                         "$ref": "#/components/schemas/Demand"
                     },
@@ -627,6 +775,7 @@
                 "type": "object",
                 "required": [
                     "type",
+                    "time",
                     "demand",
                     "collector_field",
                     "storage"
@@ -853,6 +1002,7 @@
                     },
                     "progress": {
                         "type": "integer",
+                        "minimum": 0.0,
                         "title": "Progress",
                         "default": 0
                     },
