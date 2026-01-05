@@ -666,15 +666,44 @@
                 ],
                 "title": "PtesParameters"
             },
-            "PtesStorage": {
+            "PtesPortRelativeHeights": {
                 "properties": {
-                    "volume": {
-                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh___"
+                    "top": {
+                        "type": "number",
+                        "title": "Top"
+                    },
+                    "middle": {
+                        "type": "number",
+                        "title": "Middle"
+                    },
+                    "bottom": {
+                        "type": "number",
+                        "title": "Bottom"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "volume"
+                    "top",
+                    "middle",
+                    "bottom"
+                ],
+                "title": "PtesPortRelativeHeights",
+                "description": "The heights ar relative: 1 is at the very top, 0.5 in the middle, etc."
+            },
+            "PtesStorage": {
+                "properties": {
+                    "volume": {
+                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh___"
+                    },
+                    "ports_relative_heights_1": {
+                        "$ref": "#/components/schemas/PtesPortRelativeHeights",
+                        "description": "The heights are relative: 1 means at the very top, 0.5 in the middle, etc."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "volume",
+                    "ports_relative_heights_1"
                 ],
                 "title": "PtesStorage"
             },
