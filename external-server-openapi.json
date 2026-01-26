@@ -878,7 +878,8 @@
                     "running-variations",
                     "waiting-for-cross-variation-processing",
                     "cross-processing-variations",
-                    "done"
+                    "done",
+                    "error"
                 ],
                 "title": "SimulationState"
             },
@@ -1322,7 +1323,8 @@
                 "enum": [
                     "waiting",
                     "running",
-                    "done"
+                    "done",
+                    "error"
                 ],
                 "title": "VariationState"
             }
