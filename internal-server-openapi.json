@@ -728,13 +728,18 @@
                         "$ref": "#/components/schemas/SimulationState",
                         "default": "waiting-for-variations-creation"
                     },
-                    "id": {
-                        "type": "string",
-                        "title": "Id"
-                    },
                     "name": {
                         "type": "string",
+                        "maxLength": 1024,
                         "title": "Name"
+                    },
+                    "parameters": {
+                        "$ref": "#/components/schemas/Parameters"
+                    },
+                    "id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Id"
                     },
                     "state_changed_on": {
                         "type": "string",
@@ -747,9 +752,6 @@
                         "title": "Progress",
                         "default": 0
                     },
-                    "parameters": {
-                        "$ref": "#/components/schemas/Parameters"
-                    },
                     "created_on": {
                         "type": "string",
                         "format": "date-time",
@@ -757,6 +759,7 @@
                     },
                     "user_id": {
                         "type": "string",
+                        "maxLength": 1024,
                         "title": "User Id"
                     },
                     "variations": {
@@ -769,10 +772,10 @@
                 },
                 "type": "object",
                 "required": [
-                    "id",
                     "name",
-                    "state_changed_on",
                     "parameters",
+                    "id",
+                    "state_changed_on",
                     "created_on",
                     "user_id",
                     "variations"
