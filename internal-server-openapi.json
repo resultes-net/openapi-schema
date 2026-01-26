@@ -732,6 +732,10 @@
                         "type": "string",
                         "title": "Id"
                     },
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
                     "state_changed_on": {
                         "type": "string",
                         "format": "date-time",
@@ -766,6 +770,7 @@
                 "type": "object",
                 "required": [
                     "id",
+                    "name",
                     "state_changed_on",
                     "parameters",
                     "created_on",
