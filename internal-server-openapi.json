@@ -1000,16 +1000,20 @@
                         "const": "user-provided",
                         "title": "Profile Type"
                     },
-                    "data": {
-                        "type": "string",
-                        "format": "binary",
-                        "title": "Data"
+                    "hourly_heat_demand_kW": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array",
+                        "maxItems": 8760,
+                        "minItems": 8760,
+                        "title": "Hourly Heat Demand Kw"
                     }
                 },
                 "type": "object",
                 "required": [
                     "profile_type",
-                    "data"
+                    "hourly_heat_demand_kW"
                 ],
                 "title": "UserProvidedProfile"
             },

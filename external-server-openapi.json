@@ -279,6 +279,55 @@
             }
         },
         "/variations/{variation_id}/results/{result_path}": {
+            "head": {
+                "summary": "Get Variation Result Headers",
+                "operationId": "get_variation_result_headers_variations__variation_id__results__result_path__head",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "variation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Variation Id"
+                        }
+                    },
+                    {
+                        "name": "result_path",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Result Path"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
             "get": {
                 "summary": "Get Variation Result",
                 "operationId": "get_variation_result_variations__variation_id__results__result_path__get",
@@ -1227,16 +1276,20 @@
                         "const": "user-provided",
                         "title": "Profile Type"
                     },
-                    "data": {
-                        "type": "string",
-                        "format": "binary",
-                        "title": "Data"
+                    "hourly_heat_demand_kW": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array",
+                        "maxItems": 8760,
+                        "minItems": 8760,
+                        "title": "Hourly Heat Demand Kw"
                     }
                 },
                 "type": "object",
                 "required": [
                     "profile_type",
-                    "data"
+                    "hourly_heat_demand_kW"
                 ],
                 "title": "UserProvidedProfile"
             },
