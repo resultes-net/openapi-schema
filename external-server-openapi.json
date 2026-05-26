@@ -1276,20 +1276,20 @@
                         "const": "user-provided",
                         "title": "Profile Type"
                     },
-                    "hourly_heat_demand_kW": {
+                    "hourly_heat_demand_MW": {
                         "items": {
                             "type": "number"
                         },
                         "type": "array",
                         "maxItems": 8760,
                         "minItems": 8760,
-                        "title": "Hourly Heat Demand Kw"
+                        "title": "Hourly Heat Demand Mw"
                     }
                 },
                 "type": "object",
                 "required": [
                     "profile_type",
-                    "hourly_heat_demand_kW"
+                    "hourly_heat_demand_MW"
                 ],
                 "title": "UserProvidedProfile"
             },
