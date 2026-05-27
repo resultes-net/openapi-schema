@@ -539,28 +539,30 @@
             },
             "Demand": {
                 "properties": {
-                    "profile": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/PreDefinedProfile"
-                            },
-                            {
-                                "$ref": "#/components/schemas/UserProvidedProfile"
-                            }
-                        ],
-                        "title": "Profile",
-                        "discriminator": {
-                            "propertyName": "profile_type",
-                            "mapping": {
-                                "predefined": "#/components/schemas/PreDefinedProfile",
-                                "user-provided": "#/components/schemas/UserProvidedProfile"
-                            }
-                        }
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "scaling_factor": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "title": "Scaling Factor"
+                    },
+                    "hourly_heat_demand_MW": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array",
+                        "maxItems": 8760,
+                        "minItems": 8760,
+                        "title": "Hourly Heat Demand Mw"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "profile"
+                    "name",
+                    "scaling_factor",
+                    "hourly_heat_demand_MW"
                 ],
                 "title": "Demand"
             },
@@ -653,25 +655,6 @@
                     "a2_kW_per_m2_per_K2"
                 ],
                 "title": "PerformanceCoefficients"
-            },
-            "PreDefinedProfile": {
-                "properties": {
-                    "profile_type": {
-                        "type": "string",
-                        "const": "predefined",
-                        "title": "Profile Type"
-                    },
-                    "name": {
-                        "type": "string",
-                        "title": "Name"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "profile_type",
-                    "name"
-                ],
-                "title": "PreDefinedProfile"
             },
             "PtesParameters-Input": {
                 "properties": {
@@ -1268,30 +1251,6 @@
                     "new_plain_password"
                 ],
                 "title": "UserModify"
-            },
-            "UserProvidedProfile": {
-                "properties": {
-                    "profile_type": {
-                        "type": "string",
-                        "const": "user-provided",
-                        "title": "Profile Type"
-                    },
-                    "hourly_heat_demand_MW": {
-                        "items": {
-                            "type": "number"
-                        },
-                        "type": "array",
-                        "maxItems": 8760,
-                        "minItems": 8760,
-                        "title": "Hourly Heat Demand Mw"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "profile_type",
-                    "hourly_heat_demand_MW"
-                ],
-                "title": "UserProvidedProfile"
             },
             "UserRead": {
                 "properties": {
