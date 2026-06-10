@@ -591,6 +591,9 @@
                     },
                     "storage": {
                         "$ref": "#/components/schemas/PtesStorage"
+                    },
+                    "temperatures": {
+                        "$ref": "#/components/schemas/Temperatures"
                     }
                 },
                 "type": "object",
@@ -599,7 +602,8 @@
                     "time",
                     "demand",
                     "collector_field",
-                    "storage"
+                    "storage",
+                    "temperatures"
                 ],
                 "title": "PtesParameters"
             },
@@ -783,6 +787,34 @@
                     "error"
                 ],
                 "title": "SimulationState"
+            },
+            "Temperatures": {
+                "properties": {
+                    "demand_setpoint_degC": {
+                        "title": "Demand Setpoint Degc",
+                        "type": "number"
+                    },
+                    "boiler_output_setpoint_degC": {
+                        "title": "Boiler Output Setpoint Degc",
+                        "type": "number"
+                    },
+                    "heat_pump_output_setpoint_degC": {
+                        "title": "Heat Pump Output Setpoint Degc",
+                        "type": "number"
+                    },
+                    "storage_maximum_degC": {
+                        "title": "Storage Maximum Degc",
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "demand_setpoint_degC",
+                    "boiler_output_setpoint_degC",
+                    "heat_pump_output_setpoint_degC",
+                    "storage_maximum_degC"
+                ],
+                "title": "Temperatures",
+                "type": "object"
             },
             "Time": {
                 "properties": {
