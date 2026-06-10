@@ -437,6 +437,10 @@
                     },
                     "nominal_massflow": {
                         "$ref": "#/components/schemas/ScaledValue_Literal__absolute_kg_per_h____relative_to_collector_area_kg_per_h_m2___"
+                    },
+                    "output_setpoint_temperature_degC": {
+                        "type": "number",
+                        "title": "Output Setpoint Temperature Degc"
                     }
                 },
                 "type": "object",
@@ -446,7 +450,8 @@
                     "orientation_east_west_deg",
                     "type",
                     "performance_coefficients",
-                    "nominal_massflow"
+                    "nominal_massflow",
+                    "output_setpoint_temperature_degC"
                 ],
                 "title": "CollectorField"
             },
