@@ -443,6 +443,7 @@
                     },
                     "password": {
                         "type": "string",
+                        "format": "password",
                         "title": "Password"
                     },
                     "scope": {
@@ -470,6 +471,7 @@
                                 "type": "null"
                             }
                         ],
+                        "format": "password",
                         "title": "Client Secret"
                     }
                 },
@@ -506,10 +508,6 @@
                     },
                     "nominal_massflow": {
                         "$ref": "#/components/schemas/ScaledValue_Literal__absolute_kg_per_h____relative_to_collector_area_kg_per_h_m2___"
-                    },
-                    "output_temperature_setpoint_degC": {
-                        "type": "number",
-                        "title": "Output Temperature Setpoint Degc"
                     }
                 },
                 "type": "object",
@@ -519,8 +517,7 @@
                     "orientation_east_west_deg",
                     "type",
                     "performance_coefficients",
-                    "nominal_massflow",
-                    "output_temperature_setpoint_degC"
+                    "nominal_massflow"
                 ],
                 "title": "CollectorField"
             },
@@ -532,7 +529,7 @@
                         "title": "Name"
                     },
                     "parameters": {
-                        "$ref": "#/components/schemas/Parameters-Input"
+                        "$ref": "#/components/schemas/Parameters"
                     }
                 },
                 "type": "object",
@@ -584,50 +581,23 @@
                 "type": "object",
                 "title": "HTTPValidationError"
             },
-            "Parameters-Input": {
+            "Parameters": {
                 "properties": {
                     "values": {
                         "oneOf": [
                             {
-                                "$ref": "#/components/schemas/TtesParameters-Input"
+                                "$ref": "#/components/schemas/TtesParameters"
                             },
                             {
-                                "$ref": "#/components/schemas/PtesParameters-Input"
+                                "$ref": "#/components/schemas/PtesParameters"
                             }
                         ],
                         "title": "Values",
                         "discriminator": {
                             "propertyName": "type",
                             "mapping": {
-                                "ptes": "#/components/schemas/PtesParameters-Input",
-                                "ttes": "#/components/schemas/TtesParameters-Input"
-                            }
-                        }
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "values"
-                ],
-                "title": "Parameters"
-            },
-            "Parameters-Output": {
-                "properties": {
-                    "values": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/TtesParameters-Output"
-                            },
-                            {
-                                "$ref": "#/components/schemas/PtesParameters-Output"
-                            }
-                        ],
-                        "title": "Values",
-                        "discriminator": {
-                            "propertyName": "type",
-                            "mapping": {
-                                "ptes": "#/components/schemas/PtesParameters-Output",
-                                "ttes": "#/components/schemas/TtesParameters-Output"
+                                "ptes": "#/components/schemas/PtesParameters",
+                                "ttes": "#/components/schemas/TtesParameters"
                             }
                         }
                     }
@@ -661,41 +631,7 @@
                 ],
                 "title": "PerformanceCoefficients"
             },
-            "PtesParameters-Input": {
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "ptes",
-                        "title": "Type"
-                    },
-                    "time": {
-                        "$ref": "#/components/schemas/Time"
-                    },
-                    "demand": {
-                        "$ref": "#/components/schemas/Demand"
-                    },
-                    "collector_field": {
-                        "$ref": "#/components/schemas/CollectorField"
-                    },
-                    "storage": {
-                        "$ref": "#/components/schemas/PtesStorage"
-                    },
-                    "temperatures": {
-                        "$ref": "#/components/schemas/Temperatures"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "type",
-                    "time",
-                    "demand",
-                    "collector_field",
-                    "storage",
-                    "temperatures"
-                ],
-                "title": "PtesParameters"
-            },
-            "PtesParameters-Output": {
+            "PtesParameters": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -848,7 +784,7 @@
                         "title": "Name"
                     },
                     "parameters": {
-                        "$ref": "#/components/schemas/Parameters-Output"
+                        "$ref": "#/components/schemas/Parameters"
                     },
                     "id": {
                         "type": "string",
@@ -908,7 +844,7 @@
                         "title": "Name"
                     },
                     "parameters": {
-                        "$ref": "#/components/schemas/Parameters-Output"
+                        "$ref": "#/components/schemas/Parameters"
                     },
                     "id": {
                         "type": "string",
@@ -965,30 +901,35 @@
             "Temperatures": {
                 "properties": {
                     "demand_setpoint_degC": {
-                        "title": "Demand Setpoint Degc",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Demand Setpoint Degc"
                     },
                     "boiler_output_setpoint_degC": {
-                        "title": "Boiler Output Setpoint Degc",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Boiler Output Setpoint Degc"
                     },
                     "heat_pump_output_setpoint_degC": {
-                        "title": "Heat Pump Output Setpoint Degc",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Heat Pump Output Setpoint Degc"
                     },
                     "storage_maximum_degC": {
-                        "title": "Storage Maximum Degc",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Storage Maximum Degc"
+                    },
+                    "output_temperature_setpoint_degC": {
+                        "type": "number",
+                        "title": "Output Temperature Setpoint Degc"
                     }
                 },
+                "type": "object",
                 "required": [
                     "demand_setpoint_degC",
                     "boiler_output_setpoint_degC",
                     "heat_pump_output_setpoint_degC",
-                    "storage_maximum_degC"
+                    "storage_maximum_degC",
+                    "output_temperature_setpoint_degC"
                 ],
-                "title": "Temperatures",
-                "type": "object"
+                "title": "Temperatures"
             },
             "Time": {
                 "properties": {
@@ -1040,37 +981,7 @@
                 ],
                 "title": "Token"
             },
-            "TtesParameters-Input": {
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "ttes",
-                        "title": "Type"
-                    },
-                    "time": {
-                        "$ref": "#/components/schemas/Time"
-                    },
-                    "demand": {
-                        "$ref": "#/components/schemas/Demand"
-                    },
-                    "collector_field": {
-                        "$ref": "#/components/schemas/CollectorField"
-                    },
-                    "storage": {
-                        "$ref": "#/components/schemas/TtesStorage"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "type",
-                    "time",
-                    "demand",
-                    "collector_field",
-                    "storage"
-                ],
-                "title": "TtesParameters"
-            },
-            "TtesParameters-Output": {
+            "TtesParameters": {
                 "properties": {
                     "type": {
                         "type": "string",
@@ -1350,6 +1261,13 @@
                     "type": {
                         "type": "string",
                         "title": "Error Type"
+                    },
+                    "input": {
+                        "title": "Input"
+                    },
+                    "ctx": {
+                        "type": "object",
+                        "title": "Context"
                     }
                 },
                 "type": "object",
