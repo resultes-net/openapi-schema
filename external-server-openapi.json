@@ -506,10 +506,6 @@
                     },
                     "nominal_massflow": {
                         "$ref": "#/components/schemas/ScaledValue_Literal__absolute_kg_per_h____relative_to_collector_area_kg_per_h_m2___"
-                    },
-                    "output_temperature_setpoint_degC": {
-                        "type": "number",
-                        "title": "Output Temperature Setpoint Degc"
                     }
                 },
                 "type": "object",
@@ -519,8 +515,7 @@
                     "orientation_east_west_deg",
                     "type",
                     "performance_coefficients",
-                    "nominal_massflow",
-                    "output_temperature_setpoint_degC"
+                    "nominal_massflow"
                 ],
                 "title": "CollectorField"
             },
@@ -679,6 +674,9 @@
                     },
                     "storage": {
                         "$ref": "#/components/schemas/PtesStorage"
+                    },
+                    "temperatures": {
+                        "$ref": "#/components/schemas/Temperatures"
                     }
                 },
                 "type": "object",
@@ -687,7 +685,8 @@
                     "time",
                     "demand",
                     "collector_field",
-                    "storage"
+                    "storage",
+                    "temperatures"
                 ],
                 "title": "PtesParameters"
             },
@@ -709,6 +708,9 @@
                     },
                     "storage": {
                         "$ref": "#/components/schemas/PtesStorage"
+                    },
+                    "temperatures": {
+                        "$ref": "#/components/schemas/Temperatures"
                     }
                 },
                 "type": "object",
@@ -717,7 +719,8 @@
                     "time",
                     "demand",
                     "collector_field",
-                    "storage"
+                    "storage",
+                    "temperatures"
                 ],
                 "title": "PtesParameters"
             },
@@ -953,6 +956,39 @@
                     "error"
                 ],
                 "title": "SimulationState"
+            },
+            "Temperatures": {
+                "properties": {
+                    "demand_setpoint_degC": {
+                        "type": "number",
+                        "title": "Demand Setpoint Degc"
+                    },
+                    "boiler_output_setpoint_degC": {
+                        "type": "number",
+                        "title": "Boiler Output Setpoint Degc"
+                    },
+                    "heat_pump_output_setpoint_degC": {
+                        "type": "number",
+                        "title": "Heat Pump Output Setpoint Degc"
+                    },
+                    "storage_maximum_degC": {
+                        "type": "number",
+                        "title": "Storage Maximum Degc"
+                    },
+                    "output_temperature_setpoint_degC": {
+                        "type": "number",
+                        "title": "Output Temperature Setpoint Degc"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "demand_setpoint_degC",
+                    "boiler_output_setpoint_degC",
+                    "heat_pump_output_setpoint_degC",
+                    "storage_maximum_degC",
+                    "output_temperature_setpoint_degC"
+                ],
+                "title": "Temperatures"
             },
             "Time": {
                 "properties": {
