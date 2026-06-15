@@ -437,10 +437,6 @@
                     },
                     "nominal_massflow": {
                         "$ref": "#/components/schemas/ScaledValue_Literal__absolute_kg_per_h____relative_to_collector_area_kg_per_h_m2___"
-                    },
-                    "output_temperature_setpoint_degC": {
-                        "type": "number",
-                        "title": "Output Temperature Setpoint Degc"
                     }
                 },
                 "type": "object",
@@ -450,8 +446,7 @@
                     "orientation_east_west_deg",
                     "type",
                     "performance_coefficients",
-                    "nominal_massflow",
-                    "output_temperature_setpoint_degC"
+                    "nominal_massflow"
                 ],
                 "title": "CollectorField"
             },
@@ -791,30 +786,35 @@
             "Temperatures": {
                 "properties": {
                     "demand_setpoint_degC": {
-                        "title": "Demand Setpoint Degc",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Demand Setpoint Degc"
                     },
                     "boiler_output_setpoint_degC": {
-                        "title": "Boiler Output Setpoint Degc",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Boiler Output Setpoint Degc"
                     },
                     "heat_pump_output_setpoint_degC": {
-                        "title": "Heat Pump Output Setpoint Degc",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Heat Pump Output Setpoint Degc"
                     },
                     "storage_maximum_degC": {
-                        "title": "Storage Maximum Degc",
-                        "type": "number"
+                        "type": "number",
+                        "title": "Storage Maximum Degc"
+                    },
+                    "output_temperature_setpoint_degC": {
+                        "type": "number",
+                        "title": "Output Temperature Setpoint Degc"
                     }
                 },
+                "type": "object",
                 "required": [
                     "demand_setpoint_degC",
                     "boiler_output_setpoint_degC",
                     "heat_pump_output_setpoint_degC",
-                    "storage_maximum_degC"
+                    "storage_maximum_degC",
+                    "output_temperature_setpoint_degC"
                 ],
-                "title": "Temperatures",
-                "type": "object"
+                "title": "Temperatures"
             },
             "Time": {
                 "properties": {
