@@ -801,9 +801,9 @@
                         "type": "number",
                         "title": "Storage Maximum Degc"
                     },
-                    "output_temperature_setpoint_degC": {
+                    "collector_output_setpoint_degC": {
                         "type": "number",
-                        "title": "Output Temperature Setpoint Degc"
+                        "title": "Collector Output Setpoint Degc"
                     }
                 },
                 "type": "object",
@@ -812,7 +812,7 @@
                     "boiler_output_setpoint_degC",
                     "heat_pump_output_setpoint_degC",
                     "storage_maximum_degC",
-                    "output_temperature_setpoint_degC"
+                    "collector_output_setpoint_degC"
                 ],
                 "title": "Temperatures"
             },
