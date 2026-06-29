@@ -234,6 +234,60 @@
                 }
             }
         },
+        "/simulations/{simulation_id}/state": {
+            "put": {
+                "summary": "Update Simulation State",
+                "operationId": "update_simulation_state_simulations__simulation_id__state_put",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "simulation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Simulation Id"
+                        }
+                    },
+                    {
+                        "name": "new_state",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "const": "waiting-for-variations-creation",
+                            "type": "string",
+                            "title": "New State"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SimulationState"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/variations/{variation_id}": {
             "get": {
                 "summary": "Get Variation",
@@ -751,7 +805,7 @@
             "PtesStorage": {
                 "properties": {
                     "volume": {
-                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh___"
+                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh____relative_to_collector_area_m3_per_m2___"
                     },
                     "ports_relative_heights_1": {
                         "$ref": "#/components/schemas/PtesPortRelativeHeights",
@@ -809,13 +863,14 @@
                 ],
                 "title": "ScaledValue[Literal['absolute_m2', 'relative_to_demand_m2_per_MWh']]"
             },
-            "ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh___": {
+            "ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh____relative_to_collector_area_m3_per_m2___": {
                 "properties": {
                     "scaling": {
                         "type": "string",
                         "enum": [
                             "absolute_m3",
-                            "relative_to_demand_m3_per_MWh"
+                            "relative_to_demand_m3_per_MWh",
+                            "relative_to_collector_area_m3_per_m2"
                         ],
                         "title": "Scaling"
                     },
@@ -829,7 +884,7 @@
                     "scaling",
                     "value"
                 ],
-                "title": "ScaledValue[Literal['absolute_m3', 'relative_to_demand_m3_per_MWh']]"
+                "title": "ScaledValue[Literal['absolute_m3', 'relative_to_demand_m3_per_MWh', 'relative_to_collector_area_m3_per_m2']]"
             },
             "Simulation": {
                 "properties": {
@@ -1124,96 +1179,14 @@
                 "title": "TtesPortRelativeHeights",
                 "description": "The heights ar relative: 1 is at the very top, 0.5 in the middle, etc."
             },
-            "TtesSizeAbsolute": {
-                "properties": {
-                    "size_type": {
-                        "type": "string",
-                        "const": "absolute",
-                        "title": "Size Type"
-                    },
-                    "volume_m3": {
-                        "type": "number",
-                        "title": "Volume M3"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "size_type",
-                    "volume_m3"
-                ],
-                "title": "TtesSizeAbsolute"
-            },
-            "TtesSizeScaledFloorArea": {
-                "properties": {
-                    "size_type": {
-                        "type": "string",
-                        "const": "scaled-floor-area",
-                        "title": "Size Type"
-                    },
-                    "height_m": {
-                        "type": "number",
-                        "title": "Height M"
-                    },
-                    "floor_area_relative_to_demand_m2_per_GWh": {
-                        "type": "number",
-                        "title": "Floor Area Relative To Demand M2 Per Gwh"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "size_type",
-                    "height_m",
-                    "floor_area_relative_to_demand_m2_per_GWh"
-                ],
-                "title": "TtesSizeScaledFloorArea"
-            },
-            "TtesSizeScaledHeight": {
-                "properties": {
-                    "size_type": {
-                        "type": "string",
-                        "const": "scaled_height",
-                        "title": "Size Type"
-                    },
-                    "height_relative_to_demand_m_per_GWh": {
-                        "type": "number",
-                        "title": "Height Relative To Demand M Per Gwh"
-                    },
-                    "floor_area_m2": {
-                        "type": "number",
-                        "title": "Floor Area M2"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "size_type",
-                    "height_relative_to_demand_m_per_GWh",
-                    "floor_area_m2"
-                ],
-                "title": "TtesSizeScaledHeight"
-            },
             "TtesStorage": {
                 "properties": {
-                    "size": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/TtesSizeScaledHeight"
-                            },
-                            {
-                                "$ref": "#/components/schemas/TtesSizeScaledFloorArea"
-                            },
-                            {
-                                "$ref": "#/components/schemas/TtesSizeAbsolute"
-                            }
-                        ],
-                        "title": "Size",
-                        "discriminator": {
-                            "propertyName": "size_type",
-                            "mapping": {
-                                "absolute": "#/components/schemas/TtesSizeAbsolute",
-                                "scaled-floor-area": "#/components/schemas/TtesSizeScaledFloorArea",
-                                "scaled_height": "#/components/schemas/TtesSizeScaledHeight"
-                            }
-                        }
+                    "volume": {
+                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh____relative_to_collector_area_m3_per_m2___"
+                    },
+                    "height_to_diameter_ratio_1": {
+                        "type": "number",
+                        "title": "Height To Diameter Ratio 1"
                     },
                     "location": {
                         "type": "string",
@@ -1234,7 +1207,8 @@
                 },
                 "type": "object",
                 "required": [
-                    "size",
+                    "volume",
+                    "height_to_diameter_ratio_1",
                     "location",
                     "heat_conductance_kW_per_m2_per_K",
                     "ports_relative_heights_1"
