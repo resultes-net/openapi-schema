@@ -518,6 +518,17 @@
                 ],
                 "title": "LatestLogin"
             },
+            "Location": {
+                "type": "string",
+                "enum": [
+                    "Berlin",
+                    "Brussels",
+                    "Copenhagen",
+                    "Madrid",
+                    "Zurich"
+                ],
+                "title": "Location"
+            },
             "Parameters": {
                 "properties": {
                     "values": {
@@ -721,6 +732,9 @@
                         "maxLength": 1024,
                         "title": "Name"
                     },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    },
                     "parameters": {
                         "$ref": "#/components/schemas/Parameters"
                     },
@@ -761,6 +775,7 @@
                 "type": "object",
                 "required": [
                     "name",
+                    "location",
                     "parameters",
                     "id",
                     "state_changed_on",

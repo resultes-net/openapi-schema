@@ -580,6 +580,9 @@
                         "maxLength": 1024,
                         "title": "Name"
                     },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    },
                     "parameters": {
                         "$ref": "#/components/schemas/Parameters-Input"
                     }
@@ -587,6 +590,7 @@
                 "type": "object",
                 "required": [
                     "name",
+                    "location",
                     "parameters"
                 ],
                 "title": "CreateSimulation"
@@ -632,6 +636,17 @@
                 },
                 "type": "object",
                 "title": "HTTPValidationError"
+            },
+            "Location": {
+                "type": "string",
+                "enum": [
+                    "Berlin",
+                    "Brussels",
+                    "Copenhagen",
+                    "Madrid",
+                    "Zurich"
+                ],
+                "title": "Location"
             },
             "Parameters-Input": {
                 "properties": {
@@ -897,6 +912,9 @@
                         "maxLength": 1024,
                         "title": "Name"
                     },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    },
                     "parameters": {
                         "$ref": "#/components/schemas/Parameters-Output"
                     },
@@ -937,6 +955,7 @@
                 "type": "object",
                 "required": [
                     "name",
+                    "location",
                     "parameters",
                     "id",
                     "state_changed_on",
@@ -956,6 +975,9 @@
                         "type": "string",
                         "maxLength": 1024,
                         "title": "Name"
+                    },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
                     },
                     "parameters": {
                         "$ref": "#/components/schemas/Parameters-Output"
@@ -990,6 +1012,7 @@
                 "type": "object",
                 "required": [
                     "name",
+                    "location",
                     "parameters",
                     "id",
                     "state_changed_on",
