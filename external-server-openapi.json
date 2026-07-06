@@ -573,6 +573,29 @@
                 ],
                 "title": "CollectorField"
             },
+            "Control": {
+                "properties": {
+                    "demand_temperature_setpoint_degC": {
+                        "type": "number",
+                        "title": "Demand Temperature Setpoint Degc"
+                    },
+                    "demand_delta_T_degC": {
+                        "type": "number",
+                        "title": "Demand Delta T Degc"
+                    },
+                    "storage_temperature_maximum_degC": {
+                        "type": "number",
+                        "title": "Storage Temperature Maximum Degc"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "demand_temperature_setpoint_degC",
+                    "demand_delta_T_degC",
+                    "storage_temperature_maximum_degC"
+                ],
+                "title": "Control"
+            },
             "CreateSimulation": {
                 "properties": {
                     "name": {
@@ -744,8 +767,8 @@
                     "storage": {
                         "$ref": "#/components/schemas/PtesStorage"
                     },
-                    "temperatures": {
-                        "$ref": "#/components/schemas/Temperatures"
+                    "control": {
+                        "$ref": "#/components/schemas/Control"
                     }
                 },
                 "type": "object",
@@ -755,7 +778,7 @@
                     "demand",
                     "collector_field",
                     "storage",
-                    "temperatures"
+                    "control"
                 ],
                 "title": "PtesParameters"
             },
@@ -778,8 +801,8 @@
                     "storage": {
                         "$ref": "#/components/schemas/PtesStorage"
                     },
-                    "temperatures": {
-                        "$ref": "#/components/schemas/Temperatures"
+                    "control": {
+                        "$ref": "#/components/schemas/Control"
                     }
                 },
                 "type": "object",
@@ -789,7 +812,7 @@
                     "demand",
                     "collector_field",
                     "storage",
-                    "temperatures"
+                    "control"
                 ],
                 "title": "PtesParameters"
             },
@@ -1034,39 +1057,6 @@
                     "error"
                 ],
                 "title": "SimulationState"
-            },
-            "Temperatures": {
-                "properties": {
-                    "demand_setpoint_degC": {
-                        "type": "number",
-                        "title": "Demand Setpoint Degc"
-                    },
-                    "boiler_output_setpoint_degC": {
-                        "type": "number",
-                        "title": "Boiler Output Setpoint Degc"
-                    },
-                    "heat_pump_output_setpoint_degC": {
-                        "type": "number",
-                        "title": "Heat Pump Output Setpoint Degc"
-                    },
-                    "storage_maximum_degC": {
-                        "type": "number",
-                        "title": "Storage Maximum Degc"
-                    },
-                    "collector_output_setpoint_degC": {
-                        "type": "number",
-                        "title": "Collector Output Setpoint Degc"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "demand_setpoint_degC",
-                    "boiler_output_setpoint_degC",
-                    "heat_pump_output_setpoint_degC",
-                    "storage_maximum_degC",
-                    "collector_output_setpoint_degC"
-                ],
-                "title": "Temperatures"
             },
             "Time": {
                 "properties": {
