@@ -666,6 +666,10 @@
             },
             "IAM": {
                 "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
                     "transversal_angles_degC": {
                         "items": {
                             "type": "number"
@@ -696,6 +700,7 @@
                 },
                 "type": "object",
                 "required": [
+                    "name",
                     "transversal_angles_degC",
                     "longitudinal_angles_degC",
                     "values"
