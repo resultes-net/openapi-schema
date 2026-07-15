@@ -560,6 +560,9 @@
                     },
                     "nominal_massflow": {
                         "$ref": "#/components/schemas/ScaledValue_Literal__absolute_kg_per_h____relative_to_collector_area_kg_per_h_m2___"
+                    },
+                    "iam": {
+                        "$ref": "#/components/schemas/IAM"
                     }
                 },
                 "type": "object",
@@ -569,7 +572,8 @@
                     "orientation_east_west_deg",
                     "type",
                     "performance_coefficients",
-                    "nominal_massflow"
+                    "nominal_massflow",
+                    "iam"
                 ],
                 "title": "CollectorField"
             },
@@ -659,6 +663,44 @@
                 },
                 "type": "object",
                 "title": "HTTPValidationError"
+            },
+            "IAM": {
+                "properties": {
+                    "transversal_angles_degC": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array",
+                        "maxItems": 100,
+                        "minItems": 1,
+                        "title": "Transversal Angles Degc"
+                    },
+                    "longitudinal_angles_degC": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array",
+                        "maxItems": 100,
+                        "minItems": 1,
+                        "title": "Longitudinal Angles Degc"
+                    },
+                    "values": {
+                        "items": {
+                            "type": "number"
+                        },
+                        "type": "array",
+                        "maxItems": 10000,
+                        "minItems": 1,
+                        "title": "Values"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "transversal_angles_degC",
+                    "longitudinal_angles_degC",
+                    "values"
+                ],
+                "title": "IAM"
             },
             "Location": {
                 "type": "string",
