@@ -642,13 +642,28 @@
                     "a2_kW_per_m2_per_K2": {
                         "type": "number",
                         "title": "A2 Kw Per M2 Per K2"
+                    },
+                    "a3_kJ_per_m3_per_K": {
+                        "type": "number",
+                        "title": "A3 Kj Per M3 Per K"
+                    },
+                    "a4_1": {
+                        "type": "number",
+                        "title": "A4 1"
+                    },
+                    "a5_kJ_per_m2_per_K": {
+                        "type": "number",
+                        "title": "A5 Kj Per M2 Per K"
                     }
                 },
                 "type": "object",
                 "required": [
                     "a0",
                     "a1_kW_per_m2_per_K",
-                    "a2_kW_per_m2_per_K2"
+                    "a2_kW_per_m2_per_K2",
+                    "a3_kJ_per_m3_per_K",
+                    "a4_1",
+                    "a5_kJ_per_m2_per_K"
                 ],
                 "title": "PerformanceCoefficients"
             },
