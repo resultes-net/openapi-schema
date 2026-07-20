@@ -631,9 +631,9 @@
             },
             "PerformanceCoefficients": {
                 "properties": {
-                    "a0": {
+                    "a0_1": {
                         "type": "number",
-                        "title": "A0"
+                        "title": "A0 1"
                     },
                     "a1_kW_per_m2_per_K": {
                         "type": "number",
@@ -658,7 +658,7 @@
                 },
                 "type": "object",
                 "required": [
-                    "a0",
+                    "a0_1",
                     "a1_kW_per_m2_per_K",
                     "a2_kW_per_m2_per_K2",
                     "a3_kJ_per_m3_per_K",
