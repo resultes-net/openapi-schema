@@ -718,6 +718,24 @@
                 ],
                 "title": "Location"
             },
+            "MassFlowRateAndTemperature": {
+                "properties": {
+                    "mass_flow_rate_kg_per_h": {
+                        "type": "number",
+                        "title": "Mass Flow Rate Kg Per H"
+                    },
+                    "temperature_deg_C": {
+                        "type": "number",
+                        "title": "Temperature Deg C"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "mass_flow_rate_kg_per_h",
+                    "temperature_deg_C"
+                ],
+                "title": "MassFlowRateAndTemperature"
+            },
             "Parameters-Input": {
                 "properties": {
                     "values": {
@@ -826,6 +844,9 @@
                     "collector_field": {
                         "$ref": "#/components/schemas/CollectorField"
                     },
+                    "waste_heat_recovery_source": {
+                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
+                    },
                     "storage": {
                         "$ref": "#/components/schemas/PtesStorage"
                     },
@@ -839,6 +860,7 @@
                     "time",
                     "demand",
                     "collector_field",
+                    "waste_heat_recovery_source",
                     "storage",
                     "control"
                 ],
@@ -860,6 +882,9 @@
                     "collector_field": {
                         "$ref": "#/components/schemas/CollectorField"
                     },
+                    "waste_heat_recovery_source": {
+                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
+                    },
                     "storage": {
                         "$ref": "#/components/schemas/PtesStorage"
                     },
@@ -873,6 +898,7 @@
                     "time",
                     "demand",
                     "collector_field",
+                    "waste_heat_recovery_source",
                     "storage",
                     "control"
                 ],
@@ -1463,6 +1489,29 @@
                     "error"
                 ],
                 "title": "VariationState"
+            },
+            "WasteHeatRecoverySource": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "title": "Name"
+                    },
+                    "values": {
+                        "items": {
+                            "$ref": "#/components/schemas/MassFlowRateAndTemperature"
+                        },
+                        "type": "array",
+                        "maxItems": 8760,
+                        "minItems": 8760,
+                        "title": "Values"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "values"
+                ],
+                "title": "WasteHeatRecoverySource"
             }
         },
         "securitySchemes": {
