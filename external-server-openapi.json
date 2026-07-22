@@ -133,7 +133,7 @@
                             "application/json": {
                                 "schema": {
                                     "items": {
-                                        "$ref": "#/components/schemas/Simulation"
+                                        "$ref": "#/components/schemas/GetSimulation"
                                     },
                                     "type": "array",
                                     "title": "Response Get Simulations Simulations Get"
@@ -167,7 +167,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/SimulationBase"
+                                    "$ref": "#/components/schemas/GetSimulation"
                                 }
                             }
                         }
@@ -216,7 +216,51 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Simulation"
+                                    "$ref": "#/components/schemas/GetSimulation"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/simulations/{simulation_id}/parameters": {
+            "get": {
+                "summary": "Get Simulation Parameters",
+                "operationId": "get_simulation_parameters_simulations__simulation_id__parameters_get",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "simulation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Simulation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Parameters-Output"
                                 }
                             }
                         }
@@ -602,6 +646,9 @@
             },
             "CreateSimulation": {
                 "properties": {
+                    "parameters": {
+                        "$ref": "#/components/schemas/Parameters-Input"
+                    },
                     "name": {
                         "type": "string",
                         "maxLength": 1024,
@@ -610,15 +657,16 @@
                     "location": {
                         "$ref": "#/components/schemas/Location"
                     },
-                    "parameters": {
-                        "$ref": "#/components/schemas/Parameters-Input"
+                    "type": {
+                        "$ref": "#/components/schemas/Type"
                     }
                 },
                 "type": "object",
                 "required": [
+                    "parameters",
                     "name",
                     "location",
-                    "parameters"
+                    "type"
                 ],
                 "title": "CreateSimulation"
             },
@@ -650,6 +698,70 @@
                     "hourly_heat_demand_MW"
                 ],
                 "title": "Demand"
+            },
+            "GetSimulation": {
+                "properties": {
+                    "variations": {
+                        "items": {
+                            "$ref": "#/components/schemas/Variation"
+                        },
+                        "type": "array",
+                        "title": "Variations"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/SimulationState",
+                        "default": "waiting-for-variations-creation"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Name"
+                    },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type"
+                    },
+                    "id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Id"
+                    },
+                    "state_changed_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "State Changed On"
+                    },
+                    "progress": {
+                        "type": "integer",
+                        "minimum": 0.0,
+                        "title": "Progress",
+                        "default": 0
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created On"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "User Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "variations",
+                    "name",
+                    "location",
+                    "type",
+                    "id",
+                    "state_changed_on",
+                    "created_on",
+                    "user_id"
+                ],
+                "title": "GetSimulation"
             },
             "HTTPValidationError": {
                 "properties": {
@@ -1015,126 +1127,6 @@
                 ],
                 "title": "ScaledValue[Literal['absolute_m3', 'relative_to_demand_m3_per_MWh', 'relative_to_collector_area_m3_per_m2']]"
             },
-            "Simulation": {
-                "properties": {
-                    "state": {
-                        "$ref": "#/components/schemas/SimulationState",
-                        "default": "waiting-for-variations-creation"
-                    },
-                    "name": {
-                        "type": "string",
-                        "maxLength": 1024,
-                        "title": "Name"
-                    },
-                    "location": {
-                        "$ref": "#/components/schemas/Location"
-                    },
-                    "parameters": {
-                        "$ref": "#/components/schemas/Parameters-Output"
-                    },
-                    "id": {
-                        "type": "string",
-                        "maxLength": 1024,
-                        "title": "Id"
-                    },
-                    "state_changed_on": {
-                        "type": "string",
-                        "format": "date-time",
-                        "title": "State Changed On"
-                    },
-                    "progress": {
-                        "type": "integer",
-                        "minimum": 0.0,
-                        "title": "Progress",
-                        "default": 0
-                    },
-                    "created_on": {
-                        "type": "string",
-                        "format": "date-time",
-                        "title": "Created On"
-                    },
-                    "user_id": {
-                        "type": "string",
-                        "maxLength": 1024,
-                        "title": "User Id"
-                    },
-                    "variations": {
-                        "items": {
-                            "$ref": "#/components/schemas/Variation"
-                        },
-                        "type": "array",
-                        "title": "Variations"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "name",
-                    "location",
-                    "parameters",
-                    "id",
-                    "state_changed_on",
-                    "created_on",
-                    "user_id",
-                    "variations"
-                ],
-                "title": "Simulation"
-            },
-            "SimulationBase": {
-                "properties": {
-                    "state": {
-                        "$ref": "#/components/schemas/SimulationState",
-                        "default": "waiting-for-variations-creation"
-                    },
-                    "name": {
-                        "type": "string",
-                        "maxLength": 1024,
-                        "title": "Name"
-                    },
-                    "location": {
-                        "$ref": "#/components/schemas/Location"
-                    },
-                    "parameters": {
-                        "$ref": "#/components/schemas/Parameters-Output"
-                    },
-                    "id": {
-                        "type": "string",
-                        "maxLength": 1024,
-                        "title": "Id"
-                    },
-                    "state_changed_on": {
-                        "type": "string",
-                        "format": "date-time",
-                        "title": "State Changed On"
-                    },
-                    "progress": {
-                        "type": "integer",
-                        "minimum": 0.0,
-                        "title": "Progress",
-                        "default": 0
-                    },
-                    "created_on": {
-                        "type": "string",
-                        "format": "date-time",
-                        "title": "Created On"
-                    },
-                    "user_id": {
-                        "type": "string",
-                        "maxLength": 1024,
-                        "title": "User Id"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "name",
-                    "location",
-                    "parameters",
-                    "id",
-                    "state_changed_on",
-                    "created_on",
-                    "user_id"
-                ],
-                "title": "SimulationBase"
-            },
             "SimulationState": {
                 "type": "string",
                 "enum": [
@@ -1318,6 +1310,15 @@
                     "ports_relative_heights_1"
                 ],
                 "title": "TtesStorage"
+            },
+            "Type": {
+                "type": "string",
+                "enum": [
+                    "ttes",
+                    "ptes",
+                    "btes"
+                ],
+                "title": "Type"
             },
             "UserCreate": {
                 "properties": {

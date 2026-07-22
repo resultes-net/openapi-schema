@@ -32,7 +32,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Simulation"
+                                        "$ref": "#/components/schemas/GetSimulation"
                                     },
                                     "title": "Response Get Simulations Waiting For Variations Creation Simulations Get"
                                 }
@@ -73,7 +73,46 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Simulation"
+                                    "$ref": "#/components/schemas/GetSimulation"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/simulation/{simulation_id}/parameters": {
+            "get": {
+                "summary": "Get Simulation Parameters",
+                "operationId": "get_simulation_parameters_simulation__simulation_id__parameters_get",
+                "parameters": [
+                    {
+                        "name": "simulation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Simulation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Parameters"
                                 }
                             }
                         }
@@ -521,6 +560,70 @@
                 ],
                 "title": "Demand"
             },
+            "GetSimulation": {
+                "properties": {
+                    "variations": {
+                        "items": {
+                            "$ref": "#/components/schemas/Variation"
+                        },
+                        "type": "array",
+                        "title": "Variations"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/SimulationState",
+                        "default": "waiting-for-variations-creation"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Name"
+                    },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type"
+                    },
+                    "id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Id"
+                    },
+                    "state_changed_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "State Changed On"
+                    },
+                    "progress": {
+                        "type": "integer",
+                        "minimum": 0.0,
+                        "title": "Progress",
+                        "default": 0
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created On"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "User Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "variations",
+                    "name",
+                    "location",
+                    "type",
+                    "id",
+                    "state_changed_on",
+                    "created_on",
+                    "user_id"
+                ],
+                "title": "GetSimulation"
+            },
             "HTTPValidationError": {
                 "properties": {
                     "detail": {
@@ -834,70 +937,6 @@
                 ],
                 "title": "ScaledValue[Literal['absolute_m3', 'relative_to_demand_m3_per_MWh', 'relative_to_collector_area_m3_per_m2']]"
             },
-            "Simulation": {
-                "properties": {
-                    "state": {
-                        "$ref": "#/components/schemas/SimulationState",
-                        "default": "waiting-for-variations-creation"
-                    },
-                    "name": {
-                        "type": "string",
-                        "maxLength": 1024,
-                        "title": "Name"
-                    },
-                    "location": {
-                        "$ref": "#/components/schemas/Location"
-                    },
-                    "parameters": {
-                        "$ref": "#/components/schemas/Parameters"
-                    },
-                    "id": {
-                        "type": "string",
-                        "maxLength": 1024,
-                        "title": "Id"
-                    },
-                    "state_changed_on": {
-                        "type": "string",
-                        "format": "date-time",
-                        "title": "State Changed On"
-                    },
-                    "progress": {
-                        "type": "integer",
-                        "minimum": 0.0,
-                        "title": "Progress",
-                        "default": 0
-                    },
-                    "created_on": {
-                        "type": "string",
-                        "format": "date-time",
-                        "title": "Created On"
-                    },
-                    "user_id": {
-                        "type": "string",
-                        "maxLength": 1024,
-                        "title": "User Id"
-                    },
-                    "variations": {
-                        "items": {
-                            "$ref": "#/components/schemas/Variation"
-                        },
-                        "type": "array",
-                        "title": "Variations"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "name",
-                    "location",
-                    "parameters",
-                    "id",
-                    "state_changed_on",
-                    "created_on",
-                    "user_id",
-                    "variations"
-                ],
-                "title": "Simulation"
-            },
             "SimulationState": {
                 "type": "string",
                 "enum": [
@@ -1028,6 +1067,15 @@
                 ],
                 "title": "TtesStorage"
             },
+            "Type": {
+                "type": "string",
+                "enum": [
+                    "ttes",
+                    "ptes",
+                    "btes"
+                ],
+                "title": "Type"
+            },
             "ValidationError": {
                 "properties": {
                     "loc": {
@@ -1127,7 +1175,7 @@
                     },
                     "associated_simulations": {
                         "items": {
-                            "$ref": "#/components/schemas/Simulation"
+                            "$ref": "#/components/schemas/GetSimulation"
                         },
                         "type": "array",
                         "title": "Associated Simulations"
