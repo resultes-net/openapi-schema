@@ -606,10 +606,13 @@
                 "properties": {
                     "mass_flow_rate_kg_per_h": {
                         "type": "number",
+                        "minimum": 0.0,
                         "title": "Mass Flow Rate Kg Per H"
                     },
                     "temperature_deg_C": {
                         "type": "number",
+                        "maximum": 0.0,
+                        "minimum": 0.0,
                         "title": "Temperature Deg C"
                     }
                 },
@@ -1151,20 +1154,20 @@
                         "type": "string",
                         "title": "Name"
                     },
-                    "values": {
+                    "hourly_values": {
                         "items": {
                             "$ref": "#/components/schemas/MassFlowRateAndTemperature"
                         },
                         "type": "array",
                         "maxItems": 8760,
                         "minItems": 8760,
-                        "title": "Values"
+                        "title": "Hourly Values"
                     }
                 },
                 "type": "object",
                 "required": [
                     "name",
-                    "values"
+                    "hourly_values"
                 ],
                 "title": "WasteHeatRecoverySource"
             }
