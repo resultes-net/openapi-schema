@@ -727,7 +727,7 @@
                     },
                     "temperature_deg_C": {
                         "type": "number",
-                        "maximum": 0.0,
+                        "maximum": 100.0,
                         "minimum": 0.0,
                         "title": "Temperature Deg C"
                     }
