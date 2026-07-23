@@ -701,13 +701,6 @@
             },
             "GetSimulation": {
                 "properties": {
-                    "variations": {
-                        "items": {
-                            "$ref": "#/components/schemas/Variation"
-                        },
-                        "type": "array",
-                        "title": "Variations"
-                    },
                     "state": {
                         "$ref": "#/components/schemas/SimulationState",
                         "default": "waiting-for-variations-creation"
@@ -752,7 +745,6 @@
                 },
                 "type": "object",
                 "required": [
-                    "variations",
                     "name",
                     "location",
                     "type",
@@ -829,27 +821,6 @@
                     "Zurich"
                 ],
                 "title": "Location"
-            },
-            "MassFlowRateAndTemperature": {
-                "properties": {
-                    "mass_flow_rate_kg_per_h": {
-                        "type": "number",
-                        "minimum": 0.0,
-                        "title": "Mass Flow Rate Kg Per H"
-                    },
-                    "temperature_deg_C": {
-                        "type": "number",
-                        "maximum": 100.0,
-                        "minimum": 0.0,
-                        "title": "Temperature Deg C"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "mass_flow_rate_kg_per_h",
-                    "temperature_deg_C"
-                ],
-                "title": "MassFlowRateAndTemperature"
             },
             "Parameters-Input": {
                 "properties": {
@@ -1500,20 +1471,33 @@
                         "type": "string",
                         "title": "Name"
                     },
-                    "hourly_values": {
+                    "mass_flow_rates_kg_per_h": {
                         "items": {
-                            "$ref": "#/components/schemas/MassFlowRateAndTemperature"
+                            "type": "number",
+                            "minimum": 0.0
                         },
                         "type": "array",
                         "maxItems": 8760,
                         "minItems": 8760,
-                        "title": "Hourly Values"
+                        "title": "Mass Flow Rates Kg Per H"
+                    },
+                    "temperatures_deg_C": {
+                        "items": {
+                            "type": "number",
+                            "maximum": 100.0,
+                            "minimum": 0.0
+                        },
+                        "type": "array",
+                        "maxItems": 8760,
+                        "minItems": 8760,
+                        "title": "Temperatures Deg C"
                     }
                 },
                 "type": "object",
                 "required": [
                     "name",
-                    "hourly_values"
+                    "mass_flow_rates_kg_per_h",
+                    "temperatures_deg_C"
                 ],
                 "title": "WasteHeatRecoverySource"
             }
