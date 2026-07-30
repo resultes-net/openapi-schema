@@ -32,7 +32,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/GetSimulation"
+                                        "$ref": "#/components/schemas/Simulation"
                                     },
                                     "title": "Response Get Simulations Waiting For Variations Creation Simulations Get"
                                 }
@@ -73,7 +73,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/GetSimulation"
+                                    "$ref": "#/components/schemas/Simulation"
                                 }
                             }
                         }
@@ -908,6 +908,70 @@
                 ],
                 "title": "ScaledValue[Literal['absolute_m3', 'relative_to_demand_m3_per_MWh', 'relative_to_collector_area_m3_per_m2']]"
             },
+            "Simulation": {
+                "properties": {
+                    "variations": {
+                        "items": {
+                            "$ref": "#/components/schemas/Variation"
+                        },
+                        "type": "array",
+                        "title": "Variations"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/SimulationState",
+                        "default": "waiting-for-variations-creation"
+                    },
+                    "name": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Name"
+                    },
+                    "location": {
+                        "$ref": "#/components/schemas/Location"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/Type"
+                    },
+                    "id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Id"
+                    },
+                    "state_changed_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "State Changed On"
+                    },
+                    "progress": {
+                        "type": "integer",
+                        "minimum": 0.0,
+                        "title": "Progress",
+                        "default": 0
+                    },
+                    "created_on": {
+                        "type": "string",
+                        "format": "date-time",
+                        "title": "Created On"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "User Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "variations",
+                    "name",
+                    "location",
+                    "type",
+                    "id",
+                    "state_changed_on",
+                    "created_on",
+                    "user_id"
+                ],
+                "title": "Simulation"
+            },
             "SimulationState": {
                 "type": "string",
                 "enum": [
@@ -964,6 +1028,9 @@
                     "collector_field": {
                         "$ref": "#/components/schemas/CollectorField"
                     },
+                    "waste_heat_recovery_source": {
+                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
+                    },
                     "storage": {
                         "$ref": "#/components/schemas/TtesStorage"
                     }
@@ -974,6 +1041,7 @@
                     "time",
                     "demand",
                     "collector_field",
+                    "waste_heat_recovery_source",
                     "storage"
                 ],
                 "title": "TtesParameters"
