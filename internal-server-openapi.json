@@ -800,37 +800,13 @@
                 ],
                 "title": "PtesParameters"
             },
-            "PtesPortRelativeHeights": {
-                "properties": {
-                    "top": {
-                        "type": "number",
-                        "title": "Top"
-                    },
-                    "middle": {
-                        "type": "number",
-                        "title": "Middle"
-                    },
-                    "bottom": {
-                        "type": "number",
-                        "title": "Bottom"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "top",
-                    "middle",
-                    "bottom"
-                ],
-                "title": "PtesPortRelativeHeights",
-                "description": "The heights ar relative: 1 is at the very top, 0.5 in the middle, etc."
-            },
             "PtesStorage": {
                 "properties": {
                     "volume": {
                         "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh____relative_to_collector_area_m3_per_m2___"
                     },
                     "ports_relative_heights_1": {
-                        "$ref": "#/components/schemas/PtesPortRelativeHeights",
+                        "$ref": "#/components/schemas/TesRelativePortHeights",
                         "description": "The heights are relative: 1 means at the very top, 0.5 in the middle, etc."
                     }
                 },
@@ -986,6 +962,30 @@
                 ],
                 "title": "SimulationState"
             },
+            "TesRelativePortHeights": {
+                "properties": {
+                    "top": {
+                        "type": "number",
+                        "title": "Top"
+                    },
+                    "middle": {
+                        "type": "number",
+                        "title": "Middle"
+                    },
+                    "bottom": {
+                        "type": "number",
+                        "title": "Bottom"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "top",
+                    "middle",
+                    "bottom"
+                ],
+                "title": "TesRelativePortHeights",
+                "description": "The heights ar relative: 1 is at the very top, 0.5 in the middle, etc."
+            },
             "Time": {
                 "properties": {
                     "start": {
@@ -1033,6 +1033,9 @@
                     },
                     "storage": {
                         "$ref": "#/components/schemas/TtesStorage"
+                    },
+                    "control": {
+                        "$ref": "#/components/schemas/Control"
                     }
                 },
                 "type": "object",
@@ -1042,33 +1045,10 @@
                     "demand",
                     "collector_field",
                     "waste_heat_recovery_source",
-                    "storage"
+                    "storage",
+                    "control"
                 ],
                 "title": "TtesParameters"
-            },
-            "TtesPortRelativeHeights": {
-                "properties": {
-                    "top": {
-                        "type": "number",
-                        "title": "Top"
-                    },
-                    "middle": {
-                        "type": "number",
-                        "title": "Middle"
-                    },
-                    "bottom": {
-                        "type": "number",
-                        "title": "Bottom"
-                    }
-                },
-                "type": "object",
-                "required": [
-                    "top",
-                    "middle",
-                    "bottom"
-                ],
-                "title": "TtesPortRelativeHeights",
-                "description": "The heights ar relative: 1 is at the very top, 0.5 in the middle, etc."
             },
             "TtesStorage": {
                 "properties": {
@@ -1092,7 +1072,7 @@
                         "title": "Heat Conductance Kw Per M2 Per K"
                     },
                     "ports_relative_heights_1": {
-                        "$ref": "#/components/schemas/TtesPortRelativeHeights",
+                        "$ref": "#/components/schemas/TesRelativePortHeights",
                         "description": "The heights are relative: 1 means at the very top, 0.5 in the middle, etc."
                     }
                 },
