@@ -442,7 +442,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/LatestLogin"
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/components/schemas/LatestLogin"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ],
+                                    "title": "Response Get Latest Login Latest Login Get"
                                 }
                             }
                         }
