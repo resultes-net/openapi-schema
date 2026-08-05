@@ -772,11 +772,6 @@
             },
             "PtesParameters": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "ptes",
-                        "title": "Type"
-                    },
                     "time": {
                         "$ref": "#/components/schemas/Time"
                     },
@@ -789,22 +784,27 @@
                     "waste_heat_recovery_source": {
                         "$ref": "#/components/schemas/WasteHeatRecoverySource"
                     },
-                    "storage": {
-                        "$ref": "#/components/schemas/PtesStorage"
-                    },
                     "control": {
                         "$ref": "#/components/schemas/Control"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "ptes",
+                        "title": "Type"
+                    },
+                    "storage": {
+                        "$ref": "#/components/schemas/PtesStorage"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "type",
                     "time",
                     "demand",
                     "collector_field",
                     "waste_heat_recovery_source",
-                    "storage",
-                    "control"
+                    "control",
+                    "type",
+                    "storage"
                 ],
                 "title": "PtesParameters"
             },
@@ -1022,11 +1022,6 @@
             },
             "TtesParameters": {
                 "properties": {
-                    "type": {
-                        "type": "string",
-                        "const": "ttes",
-                        "title": "Type"
-                    },
                     "time": {
                         "$ref": "#/components/schemas/Time"
                     },
@@ -1039,22 +1034,27 @@
                     "waste_heat_recovery_source": {
                         "$ref": "#/components/schemas/WasteHeatRecoverySource"
                     },
-                    "storage": {
-                        "$ref": "#/components/schemas/TtesStorage"
-                    },
                     "control": {
                         "$ref": "#/components/schemas/Control"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "ttes",
+                        "title": "Type"
+                    },
+                    "storage": {
+                        "$ref": "#/components/schemas/TtesStorage"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "type",
                     "time",
                     "demand",
                     "collector_field",
                     "waste_heat_recovery_source",
-                    "storage",
-                    "control"
+                    "control",
+                    "type",
+                    "storage"
                 ],
                 "title": "TtesParameters"
             },
