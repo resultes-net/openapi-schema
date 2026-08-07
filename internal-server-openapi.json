@@ -772,6 +772,9 @@
             },
             "PtesParameters": {
                 "properties": {
+                    "storage": {
+                        "$ref": "#/components/schemas/PtesStorage"
+                    },
                     "time": {
                         "$ref": "#/components/schemas/Time"
                     },
@@ -791,20 +794,17 @@
                         "type": "string",
                         "const": "ptes",
                         "title": "Type"
-                    },
-                    "storage": {
-                        "$ref": "#/components/schemas/PtesStorage"
                     }
                 },
                 "type": "object",
                 "required": [
+                    "storage",
                     "time",
                     "demand",
                     "collector_field",
                     "waste_heat_recovery_source",
                     "control",
-                    "type",
-                    "storage"
+                    "type"
                 ],
                 "title": "PtesParameters"
             },
@@ -1022,6 +1022,9 @@
             },
             "TtesParameters": {
                 "properties": {
+                    "storage": {
+                        "$ref": "#/components/schemas/TtesStorage"
+                    },
                     "time": {
                         "$ref": "#/components/schemas/Time"
                     },
@@ -1041,20 +1044,17 @@
                         "type": "string",
                         "const": "ttes",
                         "title": "Type"
-                    },
-                    "storage": {
-                        "$ref": "#/components/schemas/TtesStorage"
                     }
                 },
                 "type": "object",
                 "required": [
+                    "storage",
                     "time",
                     "demand",
                     "collector_field",
                     "waste_heat_recovery_source",
                     "control",
-                    "type",
-                    "storage"
+                    "type"
                 ],
                 "title": "TtesParameters"
             },
@@ -1067,17 +1067,9 @@
                         "type": "number",
                         "title": "Height To Diameter Ratio 1"
                     },
-                    "location": {
-                        "type": "string",
-                        "enum": [
-                            "above-ground-free-standing",
-                            "below-ground-buried"
-                        ],
-                        "title": "Location"
-                    },
-                    "heat_conductance_kW_per_m2_per_K": {
+                    "insulation_thickness_cm": {
                         "type": "number",
-                        "title": "Heat Conductance Kw Per M2 Per K"
+                        "title": "Insulation Thickness Cm"
                     },
                     "ports_relative_heights_1": {
                         "$ref": "#/components/schemas/TesRelativePortHeights",
@@ -1088,8 +1080,7 @@
                 "required": [
                     "volume",
                     "height_to_diameter_ratio_1",
-                    "location",
-                    "heat_conductance_kW_per_m2_per_K",
+                    "insulation_thickness_cm",
                     "ports_relative_heights_1"
                 ],
                 "title": "TtesStorage"
