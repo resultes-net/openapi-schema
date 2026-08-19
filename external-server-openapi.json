@@ -578,6 +578,109 @@
                 ],
                 "title": "Body_create_token_token_post"
             },
+            "BtesParameters-Input": {
+                "properties": {
+                    "storage": {
+                        "$ref": "#/components/schemas/BtesStorage"
+                    },
+                    "time": {
+                        "$ref": "#/components/schemas/Time"
+                    },
+                    "demand": {
+                        "$ref": "#/components/schemas/Demand"
+                    },
+                    "collector_field": {
+                        "$ref": "#/components/schemas/CollectorField"
+                    },
+                    "waste_heat_recovery_source": {
+                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
+                    },
+                    "control": {
+                        "$ref": "#/components/schemas/Control"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "btes",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "storage",
+                    "time",
+                    "demand",
+                    "collector_field",
+                    "waste_heat_recovery_source",
+                    "control",
+                    "type"
+                ],
+                "title": "BtesParameters"
+            },
+            "BtesParameters-Output": {
+                "properties": {
+                    "storage": {
+                        "$ref": "#/components/schemas/BtesStorage"
+                    },
+                    "time": {
+                        "$ref": "#/components/schemas/Time"
+                    },
+                    "demand": {
+                        "$ref": "#/components/schemas/Demand"
+                    },
+                    "collector_field": {
+                        "$ref": "#/components/schemas/CollectorField"
+                    },
+                    "waste_heat_recovery_source": {
+                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
+                    },
+                    "control": {
+                        "$ref": "#/components/schemas/Control"
+                    },
+                    "type": {
+                        "type": "string",
+                        "const": "btes",
+                        "title": "Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "storage",
+                    "time",
+                    "demand",
+                    "collector_field",
+                    "waste_heat_recovery_source",
+                    "control",
+                    "type"
+                ],
+                "title": "BtesParameters"
+            },
+            "BtesStorage": {
+                "properties": {
+                    "volume": {
+                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh____relative_to_collector_area_m3_per_m2___"
+                    },
+                    "height_to_diameter_ratio_1": {
+                        "type": "number",
+                        "title": "Height To Diameter Ratio 1"
+                    },
+                    "insulation_thickness_cm": {
+                        "type": "number",
+                        "title": "Insulation Thickness Cm"
+                    },
+                    "ports_relative_heights_1": {
+                        "$ref": "#/components/schemas/TesRelativePortHeights",
+                        "description": "The heights are relative: 1 means at the very top, 0.5 in the middle, etc."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "volume",
+                    "height_to_diameter_ratio_1",
+                    "insulation_thickness_cm",
+                    "ports_relative_heights_1"
+                ],
+                "title": "BtesStorage"
+            },
             "CollectorField": {
                 "properties": {
                     "area": {
@@ -831,12 +934,16 @@
                             },
                             {
                                 "$ref": "#/components/schemas/PtesParameters-Input"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BtesParameters-Input"
                             }
                         ],
                         "title": "Values",
                         "discriminator": {
                             "propertyName": "type",
                             "mapping": {
+                                "btes": "#/components/schemas/BtesParameters-Input",
                                 "ptes": "#/components/schemas/PtesParameters-Input",
                                 "ttes": "#/components/schemas/TtesParameters-Input"
                             }
@@ -858,12 +965,16 @@
                             },
                             {
                                 "$ref": "#/components/schemas/PtesParameters-Output"
+                            },
+                            {
+                                "$ref": "#/components/schemas/BtesParameters-Output"
                             }
                         ],
                         "title": "Values",
                         "discriminator": {
                             "propertyName": "type",
                             "mapping": {
+                                "btes": "#/components/schemas/BtesParameters-Output",
                                 "ptes": "#/components/schemas/PtesParameters-Output",
                                 "ttes": "#/components/schemas/TtesParameters-Output"
                             }
