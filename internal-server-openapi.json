@@ -501,13 +501,23 @@
             },
             "BtesStorage": {
                 "properties": {
-                    "volume": {
-                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_m3____relative_to_demand_m3_per_MWh____relative_to_collector_area_m3_per_m2___"
+                    "n_boreholes": {
+                        "$ref": "#/components/schemas/ScaledValue_Literal__absolute_1____relative_to_demand_1_per_MWh____relative_to_collector_area_1_per_m2___"
+                    },
+                    "borehole_spacing_m": {
+                        "type": "number",
+                        "title": "Borehole Spacing M"
+                    },
+                    "borehole_depth_m": {
+                        "type": "number",
+                        "title": "Borehole Depth M"
                     }
                 },
                 "type": "object",
                 "required": [
-                    "volume"
+                    "n_boreholes",
+                    "borehole_spacing_m",
+                    "borehole_depth_m"
                 ],
                 "title": "BtesStorage"
             },
@@ -878,6 +888,29 @@
                     "ports_relative_heights_1"
                 ],
                 "title": "PtesStorage"
+            },
+            "ScaledValue_Literal__absolute_1____relative_to_demand_1_per_MWh____relative_to_collector_area_1_per_m2___": {
+                "properties": {
+                    "scaling": {
+                        "type": "string",
+                        "enum": [
+                            "absolute_1",
+                            "relative_to_demand_1_per_MWh",
+                            "relative_to_collector_area_1_per_m2"
+                        ],
+                        "title": "Scaling"
+                    },
+                    "value": {
+                        "type": "number",
+                        "title": "Value"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "scaling",
+                    "value"
+                ],
+                "title": "ScaledValue[Literal['absolute_1', 'relative_to_demand_1_per_MWh', 'relative_to_collector_area_1_per_m2']]"
             },
             "ScaledValue_Literal__absolute_kg_per_h____relative_to_collector_area_kg_per_h_m2___": {
                 "properties": {
