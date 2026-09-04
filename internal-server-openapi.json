@@ -511,13 +511,17 @@
                     "borehole_depth_m": {
                         "type": "number",
                         "title": "Borehole Depth M"
+                    },
+                    "heat_exchanger": {
+                        "$ref": "#/components/schemas/HeatExchanger"
                     }
                 },
                 "type": "object",
                 "required": [
                     "n_boreholes",
                     "borehole_spacing_m",
-                    "borehole_depth_m"
+                    "borehole_depth_m",
+                    "heat_exchanger"
                 ],
                 "title": "BtesStorage"
             },
@@ -696,6 +700,24 @@
                 },
                 "type": "object",
                 "title": "HTTPValidationError"
+            },
+            "HeatExchanger": {
+                "properties": {
+                    "fluid_to_ground_resistance_m_K_per_W": {
+                        "type": "number",
+                        "title": "Fluid To Ground Resistance M K Per W"
+                    },
+                    "pipe_to_pipe_resistance_m_K_per_W": {
+                        "type": "number",
+                        "title": "Pipe To Pipe Resistance M K Per W"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "fluid_to_ground_resistance_m_K_per_W",
+                    "pipe_to_pipe_resistance_m_K_per_W"
+                ],
+                "title": "HeatExchanger"
             },
             "IAM": {
                 "properties": {
