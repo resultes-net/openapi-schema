@@ -783,7 +783,16 @@
                     "Brussels",
                     "Copenhagen",
                     "Madrid",
-                    "Zurich"
+                    "Zurich",
+                    "alpine",
+                    "cold",
+                    "dry",
+                    "hot",
+                    "mediterranean",
+                    "subtropic",
+                    "temperate",
+                    "tropical",
+                    "wet"
                 ],
                 "title": "Location"
             },
