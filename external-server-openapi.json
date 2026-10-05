@@ -122,6 +122,118 @@
                 }
             }
         },
+        "/weather-data": {
+            "get": {
+                "summary": "Get All Weather Data",
+                "operationId": "get_all_weather_data_weather_data_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "$ref": "#/components/schemas/GetWeatherData"
+                                    },
+                                    "type": "array",
+                                    "title": "Response Get All Weather Data Weather Data Get"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ]
+            },
+            "post": {
+                "summary": "Create Weather Data",
+                "operationId": "create_weather_data_weather_data_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateWeatherData"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetWeatherData"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ]
+            }
+        },
+        "/weather-data/{weather_data_id}": {
+            "get": {
+                "summary": "Get Weather Data",
+                "operationId": "get_weather_data_weather_data__weather_data_id__get",
+                "security": [
+                    {
+                        "OAuth2PasswordBearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "weather_data_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Weather Data Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetWeatherData"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/simulations": {
             "get": {
                 "summary": "Get Simulations",
@@ -756,8 +868,10 @@
                         "maxLength": 1024,
                         "title": "Name"
                     },
-                    "location": {
-                        "$ref": "#/components/schemas/Location"
+                    "weather_data_id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Weather Data Id"
                     },
                     "type": {
                         "$ref": "#/components/schemas/Type"
@@ -767,10 +881,43 @@
                 "required": [
                     "parameters",
                     "name",
-                    "location",
+                    "weather_data_id",
                     "type"
                 ],
                 "title": "CreateSimulation"
+            },
+            "CreateWeatherData": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 128,
+                        "minLength": 1,
+                        "title": "Name"
+                    },
+                    "file_name": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "File Name"
+                    },
+                    "format": {
+                        "type": "string",
+                        "const": "TM2",
+                        "title": "Format",
+                        "default": "TM2"
+                    },
+                    "contents": {
+                        "type": "string",
+                        "format": "base64",
+                        "title": "Contents"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "file_name",
+                    "contents"
+                ],
+                "title": "CreateWeatherData"
             },
             "Demand": {
                 "properties": {
@@ -812,8 +959,10 @@
                         "maxLength": 1024,
                         "title": "Name"
                     },
-                    "location": {
-                        "$ref": "#/components/schemas/Location"
+                    "weather_data_id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Weather Data Id"
                     },
                     "type": {
                         "$ref": "#/components/schemas/Type"
@@ -848,7 +997,7 @@
                 "type": "object",
                 "required": [
                     "name",
-                    "location",
+                    "weather_data_id",
                     "type",
                     "id",
                     "state_changed_on",
@@ -856,6 +1005,50 @@
                     "user_id"
                 ],
                 "title": "GetSimulation"
+            },
+            "GetWeatherData": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "maxLength": 128,
+                        "minLength": 1,
+                        "title": "Name"
+                    },
+                    "file_name": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "File Name"
+                    },
+                    "id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Id"
+                    },
+                    "format": {
+                        "$ref": "#/components/schemas/WeatherDataFormat"
+                    },
+                    "user_id": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 1024
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "User Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "name",
+                    "file_name",
+                    "id",
+                    "format",
+                    "user_id"
+                ],
+                "title": "GetWeatherData"
             },
             "HTTPValidationError": {
                 "properties": {
@@ -930,26 +1123,6 @@
                     "values"
                 ],
                 "title": "IAM"
-            },
-            "Location": {
-                "type": "string",
-                "enum": [
-                    "Berlin",
-                    "Brussels",
-                    "Copenhagen",
-                    "Madrid",
-                    "Zurich",
-                    "alpine",
-                    "cold",
-                    "dry",
-                    "hot",
-                    "mediterranean",
-                    "subtropic",
-                    "temperate",
-                    "tropical",
-                    "wet"
-                ],
-                "title": "Location"
             },
             "Parameters-Input": {
                 "properties": {
@@ -1252,8 +1425,10 @@
                         "maxLength": 1024,
                         "title": "Name"
                     },
-                    "location": {
-                        "$ref": "#/components/schemas/Location"
+                    "weather_data_id": {
+                        "type": "string",
+                        "maxLength": 1024,
+                        "title": "Weather Data Id"
                     },
                     "type": {
                         "$ref": "#/components/schemas/Type"
@@ -1289,7 +1464,7 @@
                 "required": [
                     "variations",
                     "name",
-                    "location",
+                    "weather_data_id",
                     "type",
                     "id",
                     "state_changed_on",
@@ -1707,6 +1882,14 @@
                     "temperatures_deg_C"
                 ],
                 "title": "WasteHeatRecoverySource"
+            },
+            "WeatherDataFormat": {
+                "type": "string",
+                "enum": [
+                    "TM2",
+                    "ISO"
+                ],
+                "title": "WeatherDataFormat"
             }
         },
         "securitySchemes": {
