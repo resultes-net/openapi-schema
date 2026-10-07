@@ -710,6 +710,9 @@
                     "control": {
                         "$ref": "#/components/schemas/Control"
                     },
+                    "financial": {
+                        "$ref": "#/components/schemas/Financial"
+                    },
                     "type": {
                         "type": "string",
                         "const": "btes",
@@ -724,6 +727,7 @@
                     "collector_field",
                     "waste_heat_recovery_source",
                     "control",
+                    "financial",
                     "type"
                 ],
                 "title": "BtesParameters"
@@ -748,6 +752,9 @@
                     "control": {
                         "$ref": "#/components/schemas/Control"
                     },
+                    "financial": {
+                        "$ref": "#/components/schemas/Financial"
+                    },
                     "type": {
                         "type": "string",
                         "const": "btes",
@@ -762,6 +769,7 @@
                     "collector_field",
                     "waste_heat_recovery_source",
                     "control",
+                    "financial",
                     "type"
                 ],
                 "title": "BtesParameters"
@@ -947,6 +955,86 @@
                     "hourly_heat_demand_MW"
                 ],
                 "title": "Demand"
+            },
+            "Financial": {
+                "properties": {
+                    "cost_region": {
+                        "type": "string",
+                        "enum": [
+                            "eu",
+                            "ch"
+                        ],
+                        "title": "Cost Region"
+                    },
+                    "real_discount_rate_1": {
+                        "type": "number",
+                        "exclusiveMinimum": -1.0,
+                        "title": "Real Discount Rate 1",
+                        "description": "Real, i.e., without inflation. A nominal rate n converts to a real rate r with inflation \u03c0 as 1 + r = (1 + n) / (1 + \u03c0)."
+                    },
+                    "fuel_price_per_kWh": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "title": "Fuel Price Per Kwh"
+                    },
+                    "electricity_price_per_kWh": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "title": "Electricity Price Per Kwh"
+                    },
+                    "lifetime_a": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0.0,
+                        "title": "Lifetime A"
+                    },
+                    "maintenance_rate_1": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "title": "Maintenance Rate 1",
+                        "description": "Yearly maintenance costs as share of the investment."
+                    },
+                    "boiler_efficiency_1": {
+                        "type": "number",
+                        "exclusiveMinimum": 0.0,
+                        "title": "Boiler Efficiency 1"
+                    },
+                    "storage_cost": {
+                        "$ref": "#/components/schemas/PowerLawCost",
+                        "description": "Per m\u00b3 of water equivalent storage volume, which is `x`."
+                    },
+                    "collector_field_cost": {
+                        "$ref": "#/components/schemas/PowerLawCost",
+                        "description": "Per m\u00b2 of collector aperture area, which is `x`."
+                    },
+                    "heat_pump_cost_per_kW": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "title": "Heat Pump Cost Per Kw",
+                        "description": "Per kW of thermal (condenser) power."
+                    },
+                    "boiler_cost_per_kW": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "title": "Boiler Cost Per Kw",
+                        "description": "Per kW of thermal power."
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "cost_region",
+                    "real_discount_rate_1",
+                    "fuel_price_per_kWh",
+                    "electricity_price_per_kWh",
+                    "lifetime_a",
+                    "maintenance_rate_1",
+                    "boiler_efficiency_1",
+                    "storage_cost",
+                    "collector_field_cost",
+                    "heat_pump_cost_per_kW",
+                    "boiler_cost_per_kW"
+                ],
+                "title": "Financial",
+                "description": "The parameters of the levelized cost of heat (LCOH).\n\nAll prices and costs are in today's money of the cost region's currency. The systems\ndon't know about cost regions: only the client uses `cost_region`, for the defaults and\nto label prices and results with its currency."
             },
             "GetSimulation": {
                 "properties": {
@@ -1224,6 +1312,26 @@
                 ],
                 "title": "PerformanceCoefficients"
             },
+            "PowerLawCost": {
+                "properties": {
+                    "a": {
+                        "type": "number",
+                        "minimum": 0.0,
+                        "title": "A"
+                    },
+                    "b": {
+                        "type": "number",
+                        "title": "B"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "a",
+                    "b"
+                ],
+                "title": "PowerLawCost",
+                "description": "A specific cost of `a * x**b`, in the cost region's currency per unit of `x`."
+            },
             "PtesParameters-Input": {
                 "properties": {
                     "storage": {
@@ -1244,6 +1352,9 @@
                     "control": {
                         "$ref": "#/components/schemas/Control"
                     },
+                    "financial": {
+                        "$ref": "#/components/schemas/Financial"
+                    },
                     "type": {
                         "type": "string",
                         "const": "ptes",
@@ -1258,6 +1369,7 @@
                     "collector_field",
                     "waste_heat_recovery_source",
                     "control",
+                    "financial",
                     "type"
                 ],
                 "title": "PtesParameters"
@@ -1282,6 +1394,9 @@
                     "control": {
                         "$ref": "#/components/schemas/Control"
                     },
+                    "financial": {
+                        "$ref": "#/components/schemas/Financial"
+                    },
                     "type": {
                         "type": "string",
                         "const": "ptes",
@@ -1296,6 +1411,7 @@
                     "collector_field",
                     "waste_heat_recovery_source",
                     "control",
+                    "financial",
                     "type"
                 ],
                 "title": "PtesParameters"
@@ -1581,6 +1697,9 @@
                     "control": {
                         "$ref": "#/components/schemas/Control"
                     },
+                    "financial": {
+                        "$ref": "#/components/schemas/Financial"
+                    },
                     "type": {
                         "type": "string",
                         "const": "ttes",
@@ -1595,6 +1714,7 @@
                     "collector_field",
                     "waste_heat_recovery_source",
                     "control",
+                    "financial",
                     "type"
                 ],
                 "title": "TtesParameters"
@@ -1619,6 +1739,9 @@
                     "control": {
                         "$ref": "#/components/schemas/Control"
                     },
+                    "financial": {
+                        "$ref": "#/components/schemas/Financial"
+                    },
                     "type": {
                         "type": "string",
                         "const": "ttes",
@@ -1633,6 +1756,7 @@
                     "collector_field",
                     "waste_heat_recovery_source",
                     "control",
+                    "financial",
                     "type"
                 ],
                 "title": "TtesParameters"
