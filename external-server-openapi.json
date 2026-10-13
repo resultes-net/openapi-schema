@@ -982,10 +982,11 @@
                         "minimum": 0.0,
                         "title": "Electricity Price Per Kwh"
                     },
-                    "lifetime_a": {
+                    "calculation_period_a": {
                         "type": "integer",
                         "exclusiveMinimum": 0.0,
-                        "title": "Lifetime A"
+                        "title": "Calculation Period A",
+                        "description": "The period over which the investments are converted into an annuity, without reinvestments or residual values."
                     },
                     "maintenance_rate_1": {
                         "type": "number",
@@ -1025,7 +1026,7 @@
                     "real_discount_rate_1",
                     "fuel_price_per_kWh",
                     "electricity_price_per_kWh",
-                    "lifetime_a",
+                    "calculation_period_a",
                     "maintenance_rate_1",
                     "boiler_efficiency_1",
                     "storage_cost",
