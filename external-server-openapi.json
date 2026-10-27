@@ -704,9 +704,6 @@
                     "collector_field": {
                         "$ref": "#/components/schemas/CollectorField"
                     },
-                    "waste_heat_recovery_source": {
-                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
-                    },
                     "control": {
                         "$ref": "#/components/schemas/Control"
                     },
@@ -725,7 +722,6 @@
                     "time",
                     "demand",
                     "collector_field",
-                    "waste_heat_recovery_source",
                     "control",
                     "financial",
                     "type"
@@ -746,9 +742,6 @@
                     "collector_field": {
                         "$ref": "#/components/schemas/CollectorField"
                     },
-                    "waste_heat_recovery_source": {
-                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
-                    },
                     "control": {
                         "$ref": "#/components/schemas/Control"
                     },
@@ -767,7 +760,6 @@
                     "time",
                     "demand",
                     "collector_field",
-                    "waste_heat_recovery_source",
                     "control",
                     "financial",
                     "type"
@@ -1338,6 +1330,9 @@
                     "storage": {
                         "$ref": "#/components/schemas/PtesStorage"
                     },
+                    "waste_heat_recovery_source": {
+                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
+                    },
                     "time": {
                         "$ref": "#/components/schemas/Time"
                     },
@@ -1346,9 +1341,6 @@
                     },
                     "collector_field": {
                         "$ref": "#/components/schemas/CollectorField"
-                    },
-                    "waste_heat_recovery_source": {
-                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
                     },
                     "control": {
                         "$ref": "#/components/schemas/Control"
@@ -1365,10 +1357,10 @@
                 "type": "object",
                 "required": [
                     "storage",
+                    "waste_heat_recovery_source",
                     "time",
                     "demand",
                     "collector_field",
-                    "waste_heat_recovery_source",
                     "control",
                     "financial",
                     "type"
@@ -1380,6 +1372,9 @@
                     "storage": {
                         "$ref": "#/components/schemas/PtesStorage"
                     },
+                    "waste_heat_recovery_source": {
+                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
+                    },
                     "time": {
                         "$ref": "#/components/schemas/Time"
                     },
@@ -1388,9 +1383,6 @@
                     },
                     "collector_field": {
                         "$ref": "#/components/schemas/CollectorField"
-                    },
-                    "waste_heat_recovery_source": {
-                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
                     },
                     "control": {
                         "$ref": "#/components/schemas/Control"
@@ -1407,10 +1399,10 @@
                 "type": "object",
                 "required": [
                     "storage",
+                    "waste_heat_recovery_source",
                     "time",
                     "demand",
                     "collector_field",
-                    "waste_heat_recovery_source",
                     "control",
                     "financial",
                     "type"
@@ -1683,6 +1675,9 @@
                     "storage": {
                         "$ref": "#/components/schemas/TtesStorage"
                     },
+                    "waste_heat_recovery_source": {
+                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
+                    },
                     "time": {
                         "$ref": "#/components/schemas/Time"
                     },
@@ -1691,9 +1686,6 @@
                     },
                     "collector_field": {
                         "$ref": "#/components/schemas/CollectorField"
-                    },
-                    "waste_heat_recovery_source": {
-                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
                     },
                     "control": {
                         "$ref": "#/components/schemas/Control"
@@ -1710,10 +1702,10 @@
                 "type": "object",
                 "required": [
                     "storage",
+                    "waste_heat_recovery_source",
                     "time",
                     "demand",
                     "collector_field",
-                    "waste_heat_recovery_source",
                     "control",
                     "financial",
                     "type"
@@ -1725,6 +1717,9 @@
                     "storage": {
                         "$ref": "#/components/schemas/TtesStorage"
                     },
+                    "waste_heat_recovery_source": {
+                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
+                    },
                     "time": {
                         "$ref": "#/components/schemas/Time"
                     },
@@ -1733,9 +1728,6 @@
                     },
                     "collector_field": {
                         "$ref": "#/components/schemas/CollectorField"
-                    },
-                    "waste_heat_recovery_source": {
-                        "$ref": "#/components/schemas/WasteHeatRecoverySource"
                     },
                     "control": {
                         "$ref": "#/components/schemas/Control"
@@ -1752,10 +1744,10 @@
                 "type": "object",
                 "required": [
                     "storage",
+                    "waste_heat_recovery_source",
                     "time",
                     "demand",
                     "collector_field",
-                    "waste_heat_recovery_source",
                     "control",
                     "financial",
                     "type"
